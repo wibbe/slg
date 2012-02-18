@@ -1,0 +1,7 @@
+h1. Simple Lightweight Graphics
+
+A simple and lightweight graphics rendering library.
+
+h2. License
+
+See the LICENSE file for legal information.
