@@ -2,6 +2,7 @@
 SET(SOURCE
    Main.cpp
    TestNode.cpp
+   TestMath.cpp
 )
 
 SET(LIBRARIES

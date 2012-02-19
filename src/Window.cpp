@@ -20,6 +20,9 @@ namespace slg {
   
   void Window::run()
   {
+    glfwSetTime(0.0);
+    m_lastTimeStamp = 0.0;
+    
     bool running = true;
     while (running)
     {
@@ -29,17 +32,28 @@ namespace slg {
   
   bool Window::step()
   {
+    double timeStamp = glfwGetTime();
+    double dt = timeStamp - m_lastTimeStamp;
+    m_lastTimeStamp = timeStamp;
+    
+    bool continueOn = update(dt);
+    
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-    bool continueOn = paint();
+    paint();
 		
 		glfwSwapBuffers();
 		return continueOn && glfwGetWindowParam(GLFW_OPENED);
   }
   
-  bool Window::paint()
+  bool Window::isKeyDown(int key)
   {
-    return true;
+    return glfwGetKey(key);
+  }
+  
+  void Window::setTitle(std::string const& title)
+  {
+    glfwSetWindowTitle(title.c_str());
   }
   
 }

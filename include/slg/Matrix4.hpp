@@ -20,28 +20,40 @@
  * THE SOFTWARE.
  */
 
-#ifndef SLG_TEXTURE_HPP
-#define SLG_TEXTURE_HPP
+#ifndef SLG_MATRIX4_HPP
+#define SLG_MATRIX4_HPP
 
-#include <string>
+#include "slg/Vector3.hpp"
 
 namespace slg {
   
-  class Texture
+  class Matrix4
   {
     public:
-      Texture(int width, int height, int format, unsigned char * data);
-      ~Texture();
+      Matrix4();
+      Matrix4(Matrix4 const& mat);
+      Matrix4(float m00, float m01, float m02, float m03,
+              float m10, float m11, float m12, float m13,
+              float m20, float m21, float m22, float m23,
+              float m30, float m31, float m32, float m33);
       
-      int width() const { return m_width; }
-      int height() const { return m_height; }
+      void identity();
       
-      static Texture * loadFromFile(std::string const& filename);
+      void translate(Vector3 const& pos);
+      void scale(Vector3 const& scale);
+      void perspective(float fov, float aspect, float near, float far);
+      
+      /// Upload matrix to OpenGL.
+      void load();
+      
+      Matrix4 operator * (Matrix4 const& mat) const;
+      
+      inline float operator [] (int index) const { return m[index]; }
+      
+      float const * data() const { return &m[0]; }
       
     private:
-      unsigned int m_id;
-      int m_width;
-      int m_height;
+      float m[16];
   };
   
 }

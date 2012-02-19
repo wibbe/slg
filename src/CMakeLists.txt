@@ -6,6 +6,10 @@ SET(SOURCE
   Texture.cpp
   FrameBuffer.cpp
   Window.cpp
+  Buffer.cpp
+  Matrix4.cpp
+  Quaternion.cpp
+  Input.cpp
   
   glew.c
   stb_image.c
