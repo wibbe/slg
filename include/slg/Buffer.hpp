@@ -38,10 +38,14 @@ namespace slg {
       };
       
     public:
+      Buffer();
       Buffer(int target);
+      Buffer(Buffer const& copy);
       virtual ~Buffer();
       
-      void bind();
+      Buffer const& operator = (Buffer const& copy);
+      
+      void bind() const;
       void unbind();
       
       void upload(void * data, int len, Mode mode);

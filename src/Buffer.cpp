@@ -5,6 +5,11 @@
 
 namespace slg {
   
+  Buffer::Buffer()
+    : m_id(0),
+      m_target(0)
+  { }
+  
   Buffer::Buffer(int target)
     : m_id(0),
       m_target(target)
@@ -12,12 +17,25 @@ namespace slg {
     glGenBuffers(1, &m_id);
   }
   
+  Buffer::Buffer(Buffer const& copy)
+    : m_id(copy.m_id),
+      m_target(copy.m_target)
+  {
+  }
+  
   Buffer::~Buffer()
   {
     glDeleteBuffers(1, &m_id);
   }
   
-  void Buffer::bind()
+  Buffer const& Buffer::operator = (Buffer const& copy)
+  {
+    m_id = copy.m_id;
+    m_target = copy.m_target;
+    return *this;
+  }
+  
+  void Buffer::bind() const
   {
     glBindBuffer(m_target, m_id);
   }

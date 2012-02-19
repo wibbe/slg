@@ -1,12 +1,12 @@
 
 SET(SOURCE
-  Node.cpp
   Camera.cpp
   Shader.cpp
   Texture.cpp
   FrameBuffer.cpp
   Window.cpp
   Buffer.cpp
+  BufferCollection.cpp
   Matrix4.cpp
   Quaternion.cpp
   Input.cpp
