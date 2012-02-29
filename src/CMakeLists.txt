@@ -13,7 +13,11 @@ SET(SOURCE
   File.cpp
   
   glew.c
-  stb_image.c
+  soil/SOIL.c
+  soil/image_DXT.c
+  soil/stb_image_aug.c
+  soil/image_helper.c
+  soil/stbi_DDS_aug_c.h
 )
 
 SET(LIBRARIES

@@ -28,13 +28,20 @@ namespace slg {
   class Texture
   {
     public:
+      Texture();
       Texture(int width, int height, int format, unsigned char * data);
+      Texture(Texture const& copy);
       ~Texture();
+      
+      Texture const& operator = (Texture const& copy);
       
       int width() const { return m_width; }
       int height() const { return m_height; }
       
-      static Texture * loadFromFile(const char * filename);
+      bool load(const char * filename);
+      
+      void bind(int unit);
+      void unbind(int unit);
       
     private:
       unsigned int m_id;
