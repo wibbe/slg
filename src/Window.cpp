@@ -3,11 +3,17 @@
 
 #include <GL/glew.h>
 #include <GL/glfw.h>
+#include <cassert>
 
 namespace slg {
   
+  static Window * currentWindow = 0;
+  
   Window::Window(int width, int height)
   {
+    assert(!currentWindow && "We may only have one window active at all times");
+    currentWindow = this;
+    
     glfwInit();
     glfwOpenWindow(width, height, 8, 8, 8, 8, 24, 0, GLFW_WINDOW);
     glewInit();
@@ -15,6 +21,7 @@ namespace slg {
   
   Window::~Window()
   {
+    currentWindow = 0;
     glfwTerminate();
   }
   
