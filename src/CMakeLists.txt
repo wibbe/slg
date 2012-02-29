@@ -10,6 +10,7 @@ SET(SOURCE
   Matrix4.cpp
   Quaternion.cpp
   Input.cpp
+  File.cpp
   
   glew.c
   stb_image.c
