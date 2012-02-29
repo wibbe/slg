@@ -30,11 +30,11 @@ namespace slg {
     glDeleteTextures(1, &m_id);
   }
   
-  Texture * Texture::loadFromFile(std::string const& filename)
+  Texture * Texture::loadFromFile(const char * filename)
   {
   	int width, height, components;
 
-  	unsigned char * data = stbi_load(filename.c_str(), &width, &height, &components, 4);
+  	unsigned char * data = stbi_load(filename, &width, &height, &components, 4);
 
   	if (data == NULL)
   		return 0;

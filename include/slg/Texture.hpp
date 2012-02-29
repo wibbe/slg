@@ -23,8 +23,6 @@
 #ifndef SLG_TEXTURE_HPP
 #define SLG_TEXTURE_HPP
 
-#include <string>
-
 namespace slg {
   
   class Texture
@@ -36,7 +34,7 @@ namespace slg {
       int width() const { return m_width; }
       int height() const { return m_height; }
       
-      static Texture * loadFromFile(std::string const& filename);
+      static Texture * loadFromFile(const char * filename);
       
     private:
       unsigned int m_id;
