@@ -31,6 +31,11 @@ namespace slg {
     currentWindow = this;
     
     glfwInit();
+    
+    glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
+    glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 2);
+    glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 0);
+    
     glfwOpenWindow(width, height, 8, 8, 8, 8, 24, 0, GLFW_WINDOW);
     
     glfwSetMouseButtonCallback(&mouseButton);
