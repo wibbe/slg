@@ -27,9 +27,31 @@ namespace slg {
   
   class Shader
   {
+    private:
+      static const int MAX_SHADERS = 2;
+
     public:
       Shader();
       ~Shader();
+
+      /// Load a new shader of the supplied type.
+      /// Type can be one of the following:
+      /// * GL_VERTEX_SHADER
+      /// * GL_FRAGMENT_SHADER
+      bool load(const char * filename, unsigned int type);
+
+      bool link();
+
+      void bind();
+      void unbind();
+
+    private:
+      void destroy();
+
+    private:
+      unsigned int m_program;
+      unsigned int m_shaders[MAX_SHADERS];
+      unsigned short m_shaderCount;
   };
   
 }
