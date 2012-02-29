@@ -9,6 +9,22 @@ namespace slg {
   
   static Window * currentWindow = 0;
   
+  // -- Callbacks --
+  
+  void mouseButton(int button, int state)
+  {
+    if (currentWindow)
+      currentWindow->input().setMouseButton(button, state == GLFW_PRESS);
+  }
+  
+  void mousePosition(int x, int y)
+  {
+    if (currentWindow)
+      currentWindow->input().setMousePos(x, y);
+  }
+  
+  // -- Window --
+  
   Window::Window(int width, int height)
   {
     assert(!currentWindow && "We may only have one window active at all times");
@@ -16,6 +32,10 @@ namespace slg {
     
     glfwInit();
     glfwOpenWindow(width, height, 8, 8, 8, 8, 24, 0, GLFW_WINDOW);
+    
+    glfwSetMouseButtonCallback(&mouseButton);
+    glfwSetMousePosCallback(&mousePosition);
+    
     glewInit();
   }
   

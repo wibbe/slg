@@ -24,6 +24,7 @@
 #define SLG_WINDOW_HPP
 
 #include <string>
+#include "slg/Input.hpp"
 
 namespace slg {
   
@@ -47,9 +48,14 @@ namespace slg {
 
       double time() const { return m_totalTime; }
       
+      Input const& input() const { return m_input; }
+      Input & input() { return m_input; }
+      
     private:
       double m_lastTimeStamp;
       double m_totalTime;
+      
+      Input m_input;
   };
   
 }

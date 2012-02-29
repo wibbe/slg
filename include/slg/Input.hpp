@@ -7,14 +7,22 @@ namespace slg {
   class Input
   {
     public:
+      static const int MOUSE_BUTTON_COUNT = 3;
+    public:
       Input();
       
       int mouseX() const { return m_mouseX; }
       int mouseY() const { return m_mouseY; }
       
+      bool mouseButton(int button) const;
+      
+      void setMousePos(int x, int y);
+      void setMouseButton(int button, bool down);
+      
     private:
       int m_mouseX;
       int m_mouseY;
+      bool m_mouseButtons[MOUSE_BUTTON_COUNT];
   };
   
 }
