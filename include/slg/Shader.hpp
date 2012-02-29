@@ -35,6 +35,8 @@ namespace slg {
       Shader(Shader const& copy);
       ~Shader();
 
+      void destroy();
+
       Shader const& operator = (Shader const& copy);
 
       /// Load a new shader of the supplied type.
@@ -52,9 +54,6 @@ namespace slg {
       void uniform(const char * name, float x, float y);
       void uniform(const char * name, float x, float y, float z);
       void uniform(const char * name, float x, float y, float z, float w);
-
-    private:
-      void destroy();
 
     private:
       unsigned int m_program;
