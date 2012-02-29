@@ -30,10 +30,24 @@ namespace slg {
     for (int i = 0; i < MAX_SHADERS; ++i)
       m_shaders[i] = 0;
   }
+
+  Shader::Shader(Shader const& copy)
+  {
+    *this = copy;
+  }
   
   Shader::~Shader()
   {
     destroy();
+  }
+
+  Shader const& Shader::operator = (Shader const& copy)
+  {
+    m_program = copy.m_program;
+    m_shaderCount = copy.m_shaderCount;
+
+    for (int i = 0; i <  MAX_SHADERS; ++i)
+      m_shaders[i] = copy.m_shaders[i];
   }
 
   void Shader::destroy()
@@ -103,12 +117,52 @@ namespace slg {
 
 	  return true;
   }
-void Shader::bind()
+
+  void Shader::bind()
   {
+    if (m_program)
+      glUseProgram(m_program);
   }
 
   void Shader::unbind()
   {
+    glUseProgram(0);
+  }
+
+  void Shader::uniform(const char * name, float x)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniform1f(pos, x);
+    }
+  }
+
+  void Shader::uniform(const char * name, float x, float y)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniform2f(pos, x, y);
+    }
+  }
+
+  void Shader::uniform(const char * name, float x, float y, float z)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniform3f(pos, x, y, z);
+    }
+  }
+
+  void Shader::uniform(const char * name, float x, float y, float z, float w)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniform4f(pos, x, y, z, w);
+    }
   }
   
 }

@@ -32,7 +32,10 @@ namespace slg {
 
     public:
       Shader();
+      Shader(Shader const& copy);
       ~Shader();
+
+      Shader const& operator = (Shader const& copy);
 
       /// Load a new shader of the supplied type.
       /// Type can be one of the following:
@@ -44,6 +47,11 @@ namespace slg {
 
       void bind();
       void unbind();
+
+      void uniform(const char * name, float x);
+      void uniform(const char * name, float x, float y);
+      void uniform(const char * name, float x, float y, float z);
+      void uniform(const char * name, float x, float y, float z, float w);
 
     private:
       void destroy();
