@@ -45,9 +45,9 @@ namespace slg {
     glBindBuffer(m_target, 0);
   }
   
-  void Buffer::upload(void * data, int len, Mode mode)
+  void Buffer::upload(void * data, int len, unsigned int mode)
   {
-    glBufferData(m_target, len, data, mode == STATIC ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+    glBufferData(m_target, len, data, mode);
   }
   
   // -- VertexBuffer --

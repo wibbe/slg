@@ -25,6 +25,7 @@
 
 #include <vector>
 #include "slg/Vector3.hpp"
+#include "GL/glew.h"
 
 namespace slg {
   
@@ -48,7 +49,11 @@ namespace slg {
       void bind() const;
       void unbind();
       
-      void upload(void * data, int len, Mode mode);
+      /// Upload data to this buffer
+      /// Mode should be one of the following:
+      /// * GL_STATIC_DRAW
+      /// * GL_DYNAMIC_DRAW
+      void upload(void * data, int len, unsigned int mode);
       
       int target() const { return m_target; }
       
@@ -57,6 +62,7 @@ namespace slg {
       int m_target;
   };
   
+  /// Helper class for filling a Buffer with data
   template <typename T>
   class BufferBuilder
   {
@@ -114,7 +120,7 @@ namespace slg {
       void done()
       {
         m_buffer.bind();
-        m_buffer.upload(&m_data[0], m_data.size() * sizeof(T), Buffer::STATIC);
+        m_buffer.upload(&m_data[0], m_data.size() * sizeof(T), GL_STATIC_DRAW);
         m_buffer.unbind();
       }
       
