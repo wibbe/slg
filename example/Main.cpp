@@ -2,9 +2,12 @@
 #include "slg/Window.hpp"
 #include "slg/Camera.hpp"
 #include "slg/Buffer.hpp"
+#include "slg/Shader.hpp"
 
 #include "GL/glew.h"
 #include "GL/glfw.h"
+
+#include <cmath>
 
 
 class GameWindow : public slg::Window
@@ -24,14 +27,16 @@ class GameWindow : public slg::Window
       builder.vec3(1, -1, 0);
       builder.vec3(1, 1, 0);
       builder.done();
+
+      m_shader.load("../../example/Test.vert", GL_VERTEX_SHADER);
+      m_shader.load("../../example/Test.frag", GL_FRAGMENT_SHADER);
+      m_shader.link();
       
       glClearColor(0.7, 0.8, 0.9, 1.0);
     }
     
     bool update(double dt)
     {
-      m_camera.yaw(dt * 36.0f);
-      
       return !isKeyDown(GLFW_KEY_ESC);
     }
     
@@ -39,12 +44,19 @@ class GameWindow : public slg::Window
     {
       m_camera.apply();
       glViewport(0, 0, 800, 500);
+
+      glRotatef(time() * 30.0, 0, 1, 0);
+      
+      m_shader.bind();
+      m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.0);
       
       glEnableClientState(GL_VERTEX_ARRAY);
       m_quad.bind();
       glVertexPointer(3, GL_FLOAT, 0, 0);
       
       glDrawArrays(GL_QUADS, 0, 4);
+
+      m_shader.unbind();
       
       
       glDisableClientState(GL_VERTEX_ARRAY);
@@ -53,6 +65,7 @@ class GameWindow : public slg::Window
   private:
     slg::Camera m_camera;
     slg::VertexBuffer m_quad;
+    slg::Shader m_shader;
 };
 
 
