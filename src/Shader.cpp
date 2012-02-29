@@ -48,6 +48,8 @@ namespace slg {
 
     for (int i = 0; i <  MAX_SHADERS; ++i)
       m_shaders[i] = copy.m_shaders[i];
+      
+    return *this;
   }
 
   void Shader::destroy()
