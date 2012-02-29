@@ -28,7 +28,7 @@ namespace slg {
   class Shader
   {
     private:
-      static const int MAX_SHADERS = 2;
+      static const int MAX_SHADERS = 4;
 
     public:
       Shader();
