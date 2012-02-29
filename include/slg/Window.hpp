@@ -44,9 +44,12 @@ namespace slg {
       
       virtual bool update(double dt) = 0;
       virtual void paint() = 0;
+
+      double time() const { return m_totalTime; }
       
     private:
       double m_lastTimeStamp;
+      double m_totalTime;
   };
   
 }

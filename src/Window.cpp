@@ -22,6 +22,7 @@ namespace slg {
   {
     glfwSetTime(0.0);
     m_lastTimeStamp = 0.0;
+    m_totalTime = 0.0;
     
     bool running = true;
     while (running)
@@ -35,6 +36,8 @@ namespace slg {
     double timeStamp = glfwGetTime();
     double dt = timeStamp - m_lastTimeStamp;
     m_lastTimeStamp = timeStamp;
+
+    m_totalTime += dt;
     
     bool continueOn = update(dt);
     
