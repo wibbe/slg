@@ -4,6 +4,7 @@
 #include "GL/glew.h"
 
 #include <assert.h>
+#include <stdio.h>
 
 namespace slg {
   
@@ -56,11 +57,16 @@ namespace slg {
   void FrameBuffer::edit()
   {
     m_editing = true;
-    bind();
+    glBindFramebuffer(GL_FRAMEBUFFER, m_id);
   }
 
   void FrameBuffer::done()
   {
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+      fprintf(stderr, "FrameBuffer error\n");
+    }
+
     unbind();
     m_editing = false;
   }
