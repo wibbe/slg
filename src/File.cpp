@@ -1,6 +1,7 @@
 
 #include "slg/File.hpp"
 #include <stdio.h>
+#include <sys/stat.h>
 
 namespace slg {
 
@@ -21,6 +22,13 @@ namespace slg {
 	  fclose(file);
 	  
 	  return true;
+  }
+
+  time_t fileModifiedTime(const char * filename)
+  {
+    struct stat statInfo;
+    stat(filename, &statInfo);
+    return statInfo.st_mtime;
   }
 
 }

@@ -23,11 +23,12 @@
 #ifndef SLG_FILE_HPP
 #define SLG_FILE_HPP
 
-#include <vector>
+#include <time.h>
 
 namespace slg {
 
   bool fileContent(const char * filename, char ** data, int & length);
+  time_t fileModifiedTime(const char * filename);
 
 }
 
