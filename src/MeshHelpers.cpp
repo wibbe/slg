@@ -79,7 +79,7 @@ namespace slg {
       else
       {
         // Probably a comment, eat up the rest of the line
-        char stupidBuffer[1000];
+        char stupidBuffer[1024];
         fgets(stupidBuffer, 1000, file);
       }
     }

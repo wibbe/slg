@@ -47,6 +47,7 @@ namespace slg {
   
   void Buffer::upload(void * data, int len, unsigned int mode)
   {
+    glBindBuffer(m_target, m_id);
     glBufferData(m_target, len, data, mode);
   }
   

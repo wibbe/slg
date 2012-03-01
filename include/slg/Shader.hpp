@@ -54,6 +54,8 @@ namespace slg {
       void uniform(const char * name, float x, float y);
       void uniform(const char * name, float x, float y, float z);
       void uniform(const char * name, float x, float y, float z, float w);
+      
+      void attribute(unsigned int index, const char * name) const;
 
     private:
       unsigned int m_program;

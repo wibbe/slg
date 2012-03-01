@@ -119,7 +119,6 @@ namespace slg {
       
       void done()
       {
-        m_buffer.bind();
         m_buffer.upload(&m_data[0], m_data.size() * sizeof(T), GL_STATIC_DRAW);
         m_buffer.unbind();
       }

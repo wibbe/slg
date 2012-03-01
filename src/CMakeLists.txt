@@ -11,6 +11,7 @@ SET(SOURCE
   Quaternion.cpp
   Input.cpp
   File.cpp
+  Mesh.cpp
   MeshHelpers.cpp
   
   glew.c

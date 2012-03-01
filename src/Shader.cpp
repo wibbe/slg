@@ -168,4 +168,10 @@ namespace slg {
     }
   }
   
+  void Shader::attribute(unsigned int index, const char * name) const
+  {
+    if (m_program)
+      glBindAttribLocation(m_program, index, name);
+  }
+  
 }

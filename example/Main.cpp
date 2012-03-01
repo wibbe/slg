@@ -3,11 +3,51 @@
 #include "slg/Camera.hpp"
 #include "slg/Buffer.hpp"
 #include "slg/Shader.hpp"
+#include "slg/Mesh.hpp"
 
 #include "GL/glew.h"
 #include "GL/glfw.h"
 
 #include <cmath>
+
+glm::vec3 cube[36] = {
+glm::vec3(1.000000, -1.000000, -1.000000),
+glm::vec3(1.000000, -1.000000, 1.000000),
+glm::vec3(-1.000000, -1.000000, 1.000000),
+glm::vec3(1.000000, -1.000000, -1.000000),
+glm::vec3(-1.000000, -1.000000, 1.000000),
+glm::vec3(-1.000000, -1.000000, -1.000000),
+glm::vec3(1.000000, 1.000000, -0.999999),
+glm::vec3(-1.000000, 1.000000, -1.000000),
+glm::vec3(-1.000000, 1.000000, 1.000000),
+glm::vec3(1.000000, 1.000000, -0.999999),
+glm::vec3(-1.000000, 1.000000, 1.000000),
+glm::vec3(0.999999, 1.000000, 1.000001),
+glm::vec3(1.000000, -1.000000, -1.000000),
+glm::vec3(1.000000, 1.000000, -0.999999),
+glm::vec3(0.999999, 1.000000, 1.000001),
+glm::vec3(1.000000, -1.000000, -1.000000),
+glm::vec3(0.999999, 1.000000, 1.000001),
+glm::vec3(1.000000, -1.000000, 1.000000),
+glm::vec3(1.000000, -1.000000, 1.000000),
+glm::vec3(0.999999, 1.000000, 1.000001),
+glm::vec3(-1.000000, 1.000000, 1.000000),
+glm::vec3(1.000000, -1.000000, 1.000000),
+glm::vec3(-1.000000, 1.000000, 1.000000),
+glm::vec3(-1.000000, -1.000000, 1.000000),
+glm::vec3(-1.000000, -1.000000, 1.000000),
+glm::vec3(-1.000000, 1.000000, 1.000000),
+glm::vec3(-1.000000, 1.000000, -1.000000),
+glm::vec3(-1.000000, -1.000000, 1.000000),
+glm::vec3(-1.000000, 1.000000, -1.000000),
+glm::vec3(-1.000000, -1.000000, -1.000000),
+glm::vec3(1.000000, 1.000000, -0.999999),
+glm::vec3(1.000000, -1.000000, -1.000000),
+glm::vec3(-1.000000, -1.000000, -1.000000),
+glm::vec3(1.000000, 1.000000, -0.999999),
+glm::vec3(-1.000000, -1.000000, -1.000000),
+glm::vec3(-1.000000, 1.000000, -1.000000)
+};
 
 
 class GameWindow : public slg::Window
@@ -21,12 +61,16 @@ class GameWindow : public slg::Window
       m_camera.setPosition(0, 0, 5);
       m_camera.perspective(60.0f, 800.0 / 500.0f, 1.0, 500.0);
       
-      slg::BufferBuilder<float> builder(m_quad);
-      builder.vec3(-1, 1, 0);
-      builder.vec3(-1, -1, 0);
-      builder.vec3(1, -1, 0);
-      builder.vec3(1, 1, 0);
-      builder.done();
+      //slg::BufferBuilder<float> builder(m_quad);
+      //builder.vec3(-1, 1, 1);
+      //builder.vec3(-1, -1, 0);
+      //builder.vec3(1, -1, 0);
+      //builder.vec3(1, 1, 0);
+      //builder.done();
+      
+      m_quad.upload(&cube[0], 36 * sizeof(glm::vec3), GL_STATIC_DRAW);
+      
+      //m_mesh.load("../../example/cube.obj", false);
 
       m_shader.load("../../example/Test.vert", GL_VERTEX_SHADER);
       m_shader.load("../../example/Test.frag", GL_FRAGMENT_SHADER);
@@ -49,22 +93,25 @@ class GameWindow : public slg::Window
       
       m_shader.bind();
       m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.0);
+
+      m_shader.attribute(0, "vertex");
+      //m_mesh.draw(m_shader);
       
-      glEnableClientState(GL_VERTEX_ARRAY);
+      glEnableVertexAttribArray(0);
       m_quad.bind();
-      glVertexPointer(3, GL_FLOAT, 0, 0);
-      
-      glDrawArrays(GL_QUADS, 0, 4);
+      glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+      glDrawArrays(GL_TRIANGLES, 0, 36);
 
       m_shader.unbind();
       
       
-      glDisableClientState(GL_VERTEX_ARRAY);
+      //glDisableClientState(GL_VERTEX_ARRAY);
     }
     
   private:
     slg::Camera m_camera;
     slg::VertexBuffer m_quad;
+    slg::Mesh m_mesh;
     slg::Shader m_shader;
 };
 
