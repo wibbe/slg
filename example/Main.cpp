@@ -61,10 +61,11 @@ class GameWindow : public slg::Window
       m_camera.setPosition(0, 0, 5);
       m_camera.perspective(60.0f, 800.0 / 500.0f, 1.0, 500.0);
       
-      m_mesh.load("../../example/suzanne.obj", true, true);
+      m_mesh.load("../../example/suzanne.obj", true);
 
       m_shader.load("../../example/Test.vert", GL_VERTEX_SHADER);
       m_shader.load("../../example/Test.frag", GL_FRAGMENT_SHADER);
+      m_mesh.setupAttributes(m_shader);
       m_shader.link();
       
       glClearColor(0.7, 0.8, 0.9, 1.0);
@@ -83,9 +84,10 @@ class GameWindow : public slg::Window
       glRotatef(time() * 30.0, 0, 1, 0);
       
       m_shader.bind();
-      m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.0);
+      m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.5 + std::sin(time() * 4.0) * 0.5);
 
-      m_mesh.draw(m_shader);
+      m_mesh.setupAttributes(m_shader);
+      m_mesh.draw();
 
       m_shader.unbind();
       

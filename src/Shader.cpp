@@ -28,6 +28,8 @@ namespace slg {
     : m_program(0),
       m_shaderCount(0)
   {
+    m_program = glCreateProgram();
+    
     for (int i = 0; i < MAX_SHADERS; ++i)
       m_shaders[i] = 0;
   }
@@ -85,8 +87,6 @@ namespace slg {
 
   bool Shader::link()
   {
-    m_program = glCreateProgram();
-
     for (int i = 0; i <m_shaderCount; ++i)
       glAttachShader(m_program, m_shaders[i]);
 

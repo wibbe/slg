@@ -105,13 +105,23 @@ namespace slg {
     return true;
   }
   
-  void Mesh::draw(Shader const& shader) const
+  void Mesh::setupAttributes(Shader const& shader) const
   {
     assert(m_loaded);
-    
     shader.attribute(VERTEX, "vertex");
     shader.attribute(NORMAL, "normal");
     shader.attribute(UV, "uv");
+    
+    if (m_buffers[TANGENT])
+    {
+      shader.attribute(TANGENT, "tangent");
+      shader.attribute(BINORMAL, "binormal");
+    }
+  }
+  
+  void Mesh::draw() const
+  {
+    assert(m_loaded);
     
     glEnableVertexAttribArray(VERTEX);
     m_buffers[VERTEX]->bind();
@@ -130,9 +140,6 @@ namespace slg {
     
     if (m_buffers[TANGENT])
     {
-      shader.attribute(TANGENT, "tangent");
-      shader.attribute(BINORMAL, "binormal");
-      
       glEnableVertexAttribArray(TANGENT);
       m_buffers[TANGENT]->bind();
       glVertexAttribPointer(TANGENT, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);

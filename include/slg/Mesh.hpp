@@ -13,8 +13,8 @@ namespace slg {
       enum Attributes
       {
         VERTEX,
-        UV,
         NORMAL,
+        UV,
         TANGENT,
         BINORMAL,
         INDICIES,
@@ -32,8 +32,9 @@ namespace slg {
       void destroy();
       
       bool load(const char * filename, bool useIndicies = true, bool computeTangents = false);
-      
-      void draw(Shader const& shader) const;
+
+      void setupAttributes(Shader const& shader) const;      
+      void draw() const;
       
     private:
       Buffer * m_buffers[BUFFER_COUNT];
