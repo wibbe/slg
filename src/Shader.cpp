@@ -4,7 +4,8 @@
 #include "slg/Shader.hpp"
 #include "slg/File.hpp"
 
-#include <cassert>
+#include <assert.h>
+#include <stdio.h>
 
 namespace slg {
 

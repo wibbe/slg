@@ -1,5 +1,6 @@
 
 #include "slg/File.hpp"
+#include <stdio.h>
 
 namespace slg {
 
