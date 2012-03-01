@@ -43,10 +43,7 @@ namespace slg {
           glNormalPointer(GL_FLOAT, 0, 0);
           break;
         
-        case TEX0:
-        case TEX1:
-        case TEX2:
-        case TEX3:
+        case TEX:
           break;
         
         case INDICES:

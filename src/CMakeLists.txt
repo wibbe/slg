@@ -11,6 +11,7 @@ SET(SOURCE
   Quaternion.cpp
   Input.cpp
   File.cpp
+  Mesh.cpp
   
   glew.c
   soil/SOIL.c
