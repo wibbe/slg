@@ -1,12 +1,12 @@
 
-attribute vec3 vertex;
-attribute vec3 normal;
+attribute vec3 inVertex;
+attribute vec3 inNormal;
 
-varying vec3 norm;
+varying vec3 outNormal;
 
 void main()
 {
-  gl_Position = gl_ModelViewProjectionMatrix * vec4(vertex, 1.0);
+  gl_Position = gl_ModelViewProjectionMatrix * vec4(inVertex, 1.0);
 
-  norm = normal;
+  outNormal = gl_NormalMatrix * inNormal;
 }

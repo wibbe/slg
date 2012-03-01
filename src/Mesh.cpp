@@ -105,20 +105,6 @@ namespace slg {
     return true;
   }
   
-  void Mesh::setupAttributes(Shader const& shader) const
-  {
-    assert(m_loaded);
-    shader.attribute(VERTEX, "vertex");
-    shader.attribute(NORMAL, "normal");
-    shader.attribute(UV, "uv");
-    
-    if (m_buffers[TANGENT])
-    {
-      shader.attribute(TANGENT, "tangent");
-      shader.attribute(BINORMAL, "binormal");
-    }
-  }
-  
   void Mesh::draw() const
   {
     assert(m_loaded);

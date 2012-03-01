@@ -3,6 +3,7 @@
 
 #include "slg/Shader.hpp"
 #include "slg/File.hpp"
+#include "slg/Mesh.hpp"
 
 #include <assert.h>
 #include <stdio.h>
@@ -103,6 +104,15 @@ namespace slg {
 	  }
 
 	  return true;
+  }
+  
+  void Shader::setupMeshAttributes()
+  {
+    attribute(Mesh::VERTEX, "inVertex");
+    attribute(Mesh::NORMAL, "inNormal");
+    attribute(Mesh::UV, "inTexCoord");
+    attribute(Mesh::TANGENT, "inTangent");
+    attribute(Mesh::BINORMAL, "inBinormal");
   }
 
   void Shader::bind()

@@ -30,10 +30,8 @@ namespace slg {
       ~Mesh();
       
       void destroy();
-      
       bool load(const char * filename, bool useIndicies = true, bool computeTangents = false);
-
-      void setupAttributes(Shader const& shader) const;      
+     
       void draw() const;
       
     private:
