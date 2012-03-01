@@ -27,12 +27,18 @@ namespace slg {
   
   class FrameBuffer
   {
+    private:
+      static const int MAX_COLOR_BUFFERS = 2;
+
     public:
       FrameBuffer(int width, int height);
       FrameBuffer(FrameBuffer const& copy);
       ~FrameBuffer();
 
       FrameBuffer const& operator = (FrameBuffer const& copy);
+
+      void edit();
+      void done();
 
       /**
        * Create and attach a texture to the framebuffer
@@ -58,6 +64,12 @@ namespace slg {
       unsigned int m_id;
       int m_width;
       int m_height;
+
+      unsigned int m_depthBuffer;
+      unsigned int m_colorBuffers[MAX_COLOR_BUFFERS];
+      int m_colorBufferCount;
+
+      bool m_editing;
   };
   
 }
