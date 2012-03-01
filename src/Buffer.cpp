@@ -2,6 +2,7 @@
 #include "slg/Buffer.hpp"
 
 #include "GL/glew.h"
+#include <assert.h>
 
 namespace slg {
   
@@ -17,22 +18,9 @@ namespace slg {
     glGenBuffers(1, &m_id);
   }
   
-  Buffer::Buffer(Buffer const& copy)
-    : m_id(copy.m_id),
-      m_target(copy.m_target)
-  {
-  }
-  
   Buffer::~Buffer()
   {
     glDeleteBuffers(1, &m_id);
-  }
-  
-  Buffer const& Buffer::operator = (Buffer const& copy)
-  {
-    m_id = copy.m_id;
-    m_target = copy.m_target;
-    return *this;
   }
   
   void Buffer::bind() const
@@ -40,13 +28,10 @@ namespace slg {
     glBindBuffer(m_target, m_id);
   }
   
-  void Buffer::unbind()
-  {
-    glBindBuffer(m_target, 0);
-  }
-  
   void Buffer::upload(void * data, int len, unsigned int mode)
   {
+    assert(m_id != 0);
+    
     glBindBuffer(m_target, m_id);
     glBufferData(m_target, len, data, mode);
   }

@@ -16,34 +16,29 @@ namespace slg {
         UV,
         NORMAL,
         TANGENT,
-        BINORMAL
+        BINORMAL,
+        INDICIES,
+        BUFFER_COUNT
       };
-    
+      
+    private:
+      Mesh(Mesh const& copy) { }
+      Mesh const& operator = (Mesh const& copy) { return *this; }
+      
     public:
       Mesh();
-      Mesh(Mesh const& copy);
       ~Mesh();
       
       void destroy();
-      
-      Mesh const& operator = (Mesh const& copy);
       
       bool load(const char * filename, bool useIndicies = true, bool computeTangents = false);
       
       void draw(Shader const& shader) const;
       
     private:
-      Buffer m_vertex;
-      Buffer m_uv;
-      Buffer m_normal;
-      Buffer m_tangent;
-      Buffer m_binormal;
-      Buffer m_indicies;
+      Buffer * m_buffers[BUFFER_COUNT];
       
       unsigned int m_indexCount;
-      
-      bool m_hasTangents;
-      bool m_useIndicies;
       bool m_loaded;
   };
   

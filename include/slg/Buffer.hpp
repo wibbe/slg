@@ -31,23 +31,16 @@ namespace slg {
   
   class Buffer
   {
-    public:
-      enum Mode
-      {
-        STATIC,
-        DYNAMIC
-      };
+    private:
+      Buffer(Buffer const& copy) { }
+      Buffer const& operator = (Buffer const& copy) { return *this; }
       
     public:
       Buffer();
       Buffer(int target);
-      Buffer(Buffer const& copy);
       virtual ~Buffer();
       
-      Buffer const& operator = (Buffer const& copy);
-      
       void bind() const;
-      void unbind();
       
       /// Upload data to this buffer
       /// Mode should be one of the following:
@@ -61,6 +54,7 @@ namespace slg {
       unsigned int m_id;
       int m_target;
   };
+  
   
   /// Helper class for filling a Buffer with data
   template <typename T>
@@ -120,7 +114,6 @@ namespace slg {
       void done()
       {
         m_buffer.upload(&m_data[0], m_data.size() * sizeof(T), GL_STATIC_DRAW);
-        m_buffer.unbind();
       }
       
     private:

@@ -6,7 +6,6 @@ SET(SOURCE
   FrameBuffer.cpp
   Window.cpp
   Buffer.cpp
-  BufferCollection.cpp
   Matrix4.cpp
   Quaternion.cpp
   Input.cpp
