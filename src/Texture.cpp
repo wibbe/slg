@@ -50,7 +50,7 @@ namespace slg {
   bool Texture::load(const char * filename)
   {
     m_id = SOIL_load_OGL_texture(filename,
-                                 4, 0,
+                                 4, SOIL_CREATE_NEW_ID,
                                  SOIL_FLAG_POWER_OF_TWO | SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_COMPRESS_TO_DXT,
                                  &m_width,
                                  &m_height);
