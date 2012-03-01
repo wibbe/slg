@@ -31,26 +31,10 @@ namespace slg {
     for (int i = 0; i < MAX_SHADERS; ++i)
       m_shaders[i] = 0;
   }
-
-  Shader::Shader(Shader const& copy)
-  {
-    *this = copy;
-  }
   
   Shader::~Shader()
   {
     destroy();
-  }
-
-  Shader const& Shader::operator = (Shader const& copy)
-  {
-    m_program = copy.m_program;
-    m_shaderCount = copy.m_shaderCount;
-
-    for (int i = 0; i <  MAX_SHADERS; ++i)
-      m_shaders[i] = copy.m_shaders[i];
-      
-    return *this;
   }
 
   void Shader::destroy()

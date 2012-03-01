@@ -29,15 +29,15 @@ namespace slg {
   {
     private:
       static const int MAX_SHADERS = 4;
-
+      
+      Shader(Shader const& copy) { }
+      Shader const& operator = (Shader const& copy) { return *this; }
+      
     public:
       Shader();
-      Shader(Shader const& copy);
       ~Shader();
 
       void destroy();
-
-      Shader const& operator = (Shader const& copy);
 
       /// Load a new shader of the supplied type.
       /// Type can be one of the following:
