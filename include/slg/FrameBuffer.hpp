@@ -28,8 +28,36 @@ namespace slg {
   class FrameBuffer
   {
     public:
-      FrameBuffer();
+      FrameBuffer(int width, int height);
+      FrameBuffer(FrameBuffer const& copy);
       ~FrameBuffer();
+
+      FrameBuffer const& operator = (FrameBuffer const& copy);
+
+      /**
+       * Create and attach a texture to the framebuffer
+       * 
+       * Format can be one of the following:
+       * - GL_RGB, GL_RGBA, GL_ALPHA, and so on...
+       * 
+       * Type should be:
+       *   GL_UNSIGNED_BYTE
+       *   GL_FLOAT
+       */
+      void addColorTexture(unsigned int format, unsigned int type);
+      void addDepthTexture();
+      void addDepthBuffer();
+
+      int width() const { return m_width; }
+      int height() const { return m_height; }
+
+      void bind();
+      void unbind();
+
+    private:
+      unsigned int m_id;
+      int m_width;
+      int m_height;
   };
   
 }
