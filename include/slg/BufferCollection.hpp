@@ -13,11 +13,8 @@ namespace slg {
       {
         VERTEX,
         NORMAL,
-        TEX0,
-        TEX1,
-        TEX2,
-        TEX3,
-        TEX4,
+        TANGENT,
+        TEX,
         INDICES
       };
       

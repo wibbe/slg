@@ -23,8 +23,8 @@
 #ifndef SLG_CAMERA_HPP
 #define SLG_CAMERA_HPP
 
-#include "slg/Vector3.hpp"
-#include "slg/Quaternion.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/quaternion.hpp"
 
 namespace slg {
   
@@ -38,12 +38,12 @@ namespace slg {
       
       void perspective(float fov, float aspect, float near, float far);
       
-      void setPosition(Vector3 const& pos) { m_position = pos; }
-      void setPosition(float x, float y, float z) { setPosition(Vector3(x, y, z)); }
+      void setPosition(glm::vec3 const& pos) { m_position = pos; }
+      void setPosition(float x, float y, float z) { setPosition(glm::vec3(x, y, z)); }
       
-      Vector3 const& position() const { return m_position; }
+      glm::vec3 const& position() const { return m_position; }
       
-      Quaternion const& orientation() const { return m_orientation; }
+      glm::quat const& orientation() const { return m_orientation; }
       
       void move(float amount);
       void strafe(float amount);
@@ -52,10 +52,9 @@ namespace slg {
       void pitch(float angle);
       
     private:
-      Vector3 m_position;
-      Quaternion m_orientation;
-      
-      Matrix4 m_projection;
+      glm::vec3 m_position;
+      glm::quat m_orientation;
+      glm::mat4x4 m_projection;
   };
   
 }

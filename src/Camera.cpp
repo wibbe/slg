@@ -2,6 +2,9 @@
 #include "slg/Camera.hpp"
 
 #include "GL/glew.h"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/transform.hpp"
+#include "glm/gtx/quaternion.hpp"
 
 namespace slg {
   
@@ -18,44 +21,42 @@ namespace slg {
   
   void Camera::perspective(float fov, float aspect, float near, float far)
   {
-    m_projection.identity();
-    m_projection.perspective(fov, aspect, near, far);
+    m_projection = glm::perspective(fov, aspect, near, far);
   }
   
   void Camera::move(float amount)
   {
-    m_position += Vector3(0.0f, 0.0f, -amount);
+    m_position += glm::vec3(0.0f, 0.0f, -amount);
   }
   
   void Camera::strafe(float amount)
   {
-    m_position += Vector3(amount, 0.0f, 0.0f);
+    m_position += glm::vec3(amount, 0.0f, 0.0f);
   }
   
   void Camera::yaw(float angle)
   {
-    m_orientation = m_orientation * Quaternion(Vector3(0, 1, 0), degToRad(angle));
+    m_orientation = m_orientation * glm::rotate(glm::quat(), angle, glm::vec3(0, 1, 0));
   }
   
   void Camera::pitch(float angle)
   {
-    m_orientation = Quaternion(Vector3(1, 0, 0), degToRad(angle)) * m_orientation;
+    m_orientation = glm::rotate(glm::quat(), angle, glm::vec3(1, 0, 0)) * m_orientation;
   }
   
   void Camera::apply()
   {
-    Matrix4 translate;
-    translate.translate(-m_position);
+    glm::mat4x4 translate = glm::translate(-m_position);
     
-    Matrix4 result = translate * m_orientation.toMatrix();
+    glm::mat4x4 result = translate * glm::toMat4(m_orientation);
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    m_projection.load();
+    glLoadMatrixf(&m_projection[0][0]);
     
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    result.load();
+    glLoadMatrixf(&result[0][0]);
   }
   
 }
