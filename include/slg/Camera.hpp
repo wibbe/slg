@@ -34,12 +34,12 @@ namespace slg {
       Camera();
       virtual ~Camera();
       
-      void apply();
+      void update();
       
       void perspective(float fov, float aspect, float near, float far);
       
-      void setPosition(glm::vec3 const& pos) { m_position = pos; }
-      void setPosition(float x, float y, float z) { setPosition(glm::vec3(x, y, z)); }
+      void setPosition(glm::vec3 const& pos) { m_position = pos; m_changed = true; }
+      void setPosition(float x, float y, float z) { setPosition(glm::vec3(x, y, z)); m_changed = true; }
       
       glm::vec3 const& position() const { return m_position; }
       
@@ -50,10 +50,16 @@ namespace slg {
       
       void yaw(float angle);
       void pitch(float angle);
+
+      glm::mat4x4 view() const { return m_view; }
+      glm::mat4x4 projection() const { return m_projection; }
       
     private:
+      bool m_changed;
       glm::vec3 m_position;
       glm::quat m_orientation;
+
+      glm::mat4x4 m_view;
       glm::mat4x4 m_projection;
   };
   
