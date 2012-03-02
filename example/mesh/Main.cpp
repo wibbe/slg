@@ -36,6 +36,23 @@ class GameWindow : public slg::Window
     
     bool update(double dt)
     {
+      if (isKeyDown('W'))
+        m_camera.move(10.0 * dt);
+      else if (isKeyDown('S'))
+        m_camera.move(-10.0 * dt);
+
+      if (isKeyDown('D'))
+        m_camera.strafe(5.0 * dt);
+      else if (isKeyDown('A'))
+        m_camera.strafe(-5.0 * dt);
+
+      if (input().mouseButton(1))
+      {
+        m_camera.yaw(input().mouseRelX() * 0.3);
+        m_camera.pitch(input().mouseRelY() * 0.3);
+      }
+
+
       return !isKeyDown(GLFW_KEY_ESC);
     }
     
@@ -44,8 +61,8 @@ class GameWindow : public slg::Window
       m_camera.update();
       glViewport(0, 0, 800, 500);
 
-      glm::mat4x4 model = glm::rotate(glm::mat4x4(), (float)(time() * 30.0), glm::vec3(0, 1, 0));
-      glm::mat4x4 modelViewProj = m_camera.projection() * m_camera.view() * model;
+      glm::mat4 model = glm::rotate(glm::mat4(1.0), (float)(time() * 30.0), glm::vec3(0, 1, 0));
+      glm::mat4 modelViewProj = m_camera.projection() * m_camera.view() * model;
 
       //glRotatef(time() * 30.0, 0, 1, 0);
       
@@ -57,9 +74,6 @@ class GameWindow : public slg::Window
       m_mesh.draw();
 
       m_shader.unbind();
-      
-      
-      //glDisableClientState(GL_VERTEX_ARRAY);
     }
     
   private:
