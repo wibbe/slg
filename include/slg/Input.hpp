@@ -13,6 +13,8 @@ namespace slg {
       
       int mouseX() const { return m_mouseX; }
       int mouseY() const { return m_mouseY; }
+      int mouseRelX();
+      int mouseRelY();
       
       bool mouseButton(int button) const;
       
@@ -22,6 +24,8 @@ namespace slg {
     private:
       int m_mouseX;
       int m_mouseY;
+      int m_mouseRelX;
+      int m_mouseRelY;
       bool m_mouseButtons[MOUSE_BUTTON_COUNT];
   };
   
