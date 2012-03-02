@@ -43,22 +43,25 @@ namespace slg {
       
       glm::vec3 const& position() const { return m_position; }
       
-      glm::quat const& orientation() const { return m_orientation; }
+      glm::mat4 const& orientation() const { return m_orientation; }
       
       void move(float amount);
       void strafe(float amount);
       
       void yaw(float angle);
       void pitch(float angle);
+      void roll(float angle);
 
       glm::mat4 view() const { return m_view; }
       glm::mat4 projection() const { return m_projection; }
       
     private:
       bool m_changed;
-      glm::vec3 m_position;
-      glm::quat m_orientation;
 
+      glm::vec3 m_euler;
+      glm::vec3 m_position;
+
+      glm::mat4 m_orientation;
       glm::mat4 m_view;
       glm::mat4 m_projection;
   };
