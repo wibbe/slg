@@ -1,7 +1,6 @@
 
 SET(SOURCE
    Main.cpp
-   TestMath.cpp
 )
 
 SET(LIBRARIES

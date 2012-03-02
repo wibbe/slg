@@ -6,8 +6,6 @@ SET(SOURCE
   FrameBuffer.cpp
   Window.cpp
   Buffer.cpp
-  Matrix4.cpp
-  Quaternion.cpp
   Input.cpp
   File.cpp
   Mesh.cpp

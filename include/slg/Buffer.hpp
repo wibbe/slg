@@ -24,8 +24,8 @@
 #define SLG_BUFFER_HPP
 
 #include <vector>
-#include "slg/Vector3.hpp"
 #include "GL/glew.h"
+#include "glm/glm.hpp"
 
 namespace slg {
   
@@ -83,7 +83,7 @@ namespace slg {
         m_data.push_back(z);
       }
       
-      void vec3(Vector3 const& vec)
+      void vec3(glm::vec3 const& vec)
       {
         m_data.push_back(vec.x);
         m_data.push_back(vec.y);
@@ -96,6 +96,14 @@ namespace slg {
         m_data.push_back(y);
         m_data.push_back(z);
         m_data.push_back(w);
+      }
+
+      void vec4(glm::vec4 const& vec)
+      {
+        m_data.push_back(vec.x);
+        m_data.push_back(vec.y);
+        m_data.push_back(vec.z);
+        m_data.push_back(vec.w);
       }
       
       void triangle(T const& a, T const& b, T const& c)
