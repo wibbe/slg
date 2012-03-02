@@ -8,6 +8,9 @@
 #include "GL/glew.h"
 #include "GL/glfw.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 #include <cmath>
 
 class GameWindow : public slg::Window
@@ -38,13 +41,18 @@ class GameWindow : public slg::Window
     
     void paint()
     {
-      m_camera.apply();
+      m_camera.update();
       glViewport(0, 0, 800, 500);
 
-      glRotatef(time() * 30.0, 0, 1, 0);
+      glm::mat4x4 model = glm::rotate(glm::mat4x4(), (float)(time() * 30.0), glm::vec3(0, 1, 0));
+      glm::mat4x4 modelViewProj = m_camera.projection() * m_camera.view() * model;
+
+      //glRotatef(time() * 30.0, 0, 1, 0);
       
       m_shader.bind();
       m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.5 + std::sin(time() * 4.0) * 0.5);
+      m_shader.uniform("modelViewProj", modelViewProj);
+      m_shader.uniform("model", model);
       
       m_mesh.draw();
 
