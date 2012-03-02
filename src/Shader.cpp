@@ -162,6 +162,24 @@ namespace slg {
     }
   }
   
+  void Shader::uniform(const char * name, glm::vec3 const& vec)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniform3f(pos, vec.x, vec.y, vec.z);
+    }
+  }
+  
+  void Shader::uniform(const char * name, glm::mat4x4 const& mat)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniformMatrix4fv(pos, 1, GL_FALSE, &mat[0][0]);
+    }
+  }
+  
   void Shader::attribute(unsigned int index, const char * name) const
   {
     if (m_program)

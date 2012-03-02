@@ -23,6 +23,8 @@
 #ifndef SLG_SHADER_HPP
 #define SLG_SHADER_HPP
 
+#include "glm/glm.hpp"
+
 namespace slg {
   
   class Shader
@@ -55,6 +57,9 @@ namespace slg {
       void uniform(const char * name, float x, float y);
       void uniform(const char * name, float x, float y, float z);
       void uniform(const char * name, float x, float y, float z, float w);
+      
+      void uniform(const char * name, glm::vec3 const& vec);
+      void uniform(const char * name, glm::mat4x4 const& mat);
       
       void attribute(unsigned int index, const char * name) const;
 
