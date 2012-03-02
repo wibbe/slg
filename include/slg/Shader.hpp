@@ -59,7 +59,7 @@ namespace slg {
       void uniform(const char * name, float x, float y, float z, float w);
       
       void uniform(const char * name, glm::vec3 const& vec);
-      void uniform(const char * name, glm::mat4x4 const& mat);
+      void uniform(const char * name, glm::mat4 const& mat);
       
       void attribute(unsigned int index, const char * name) const;
 

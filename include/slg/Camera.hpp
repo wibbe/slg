@@ -51,16 +51,16 @@ namespace slg {
       void yaw(float angle);
       void pitch(float angle);
 
-      glm::mat4x4 view() const { return m_view; }
-      glm::mat4x4 projection() const { return m_projection; }
+      glm::mat4 view() const { return m_view; }
+      glm::mat4 projection() const { return m_projection; }
       
     private:
       bool m_changed;
       glm::vec3 m_position;
       glm::quat m_orientation;
 
-      glm::mat4x4 m_view;
-      glm::mat4x4 m_projection;
+      glm::mat4 m_view;
+      glm::mat4 m_projection;
   };
   
 }

@@ -171,7 +171,7 @@ namespace slg {
     }
   }
   
-  void Shader::uniform(const char * name, glm::mat4x4 const& mat)
+  void Shader::uniform(const char * name, glm::mat4 const& mat)
   {
     if (m_program)
     {

@@ -54,8 +54,8 @@ namespace slg {
   {
     if (m_changed)
     {
-      glm::mat4x4 translate = glm::translate(-m_position);
-      m_view = translate * glm::toMat4(m_orientation);
+      glm::mat4 translate = glm::translate(-m_position);
+      m_view = glm::toMat4(m_orientation) * translate;
       m_changed = true;
     }    
   }
