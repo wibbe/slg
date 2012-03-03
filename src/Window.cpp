@@ -22,6 +22,12 @@ namespace slg {
     if (currentWindow)
       currentWindow->input().setMousePos(x, y);
   }
+
+  void windowResized(int width, int height)
+  {
+    if (currentWindow)
+      currentWindow->resize(width, height);
+  }
   
   // -- Window --
   
@@ -40,12 +46,14 @@ namespace slg {
     
     glfwSetMouseButtonCallback(&mouseButton);
     glfwSetMousePosCallback(&mousePosition);
+    glfwSetWindowSizeCallback(&windowResized);
     
     glewInit();
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
+    
   }
   
   Window::~Window()
@@ -59,6 +67,13 @@ namespace slg {
     glfwSetTime(0.0);
     m_lastTimeStamp = 0.0;
     m_totalTime = 0.0;
+
+    // Call resize before we start
+    {
+      int width, height;
+      glfwGetWindowSize(&width, &height);
+      resize(width, height);
+    }
     
     bool running = true;
     while (running)

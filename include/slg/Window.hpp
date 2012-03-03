@@ -43,7 +43,8 @@ namespace slg {
       
       void setTitle(std::string const& title);
       
-      virtual bool update(double dt) = 0;
+      virtual void resize(int width, int height) { }
+      virtual bool update(double dt) { return true; }
       virtual void paint() = 0;
 
       double time() const { return m_totalTime; }
