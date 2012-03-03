@@ -47,8 +47,7 @@ namespace slg {
        * - GL_RGB, GL_RGBA, GL_ALPHA, and so on...
        * 
        * Type should be:
-       *   GL_UNSIGNED_BYTE
-       *   GL_FLOAT
+       * - GL_UNSIGNED_BYTE, GL_FLOAT
        */
       void addColorTexture(unsigned int format, unsigned int type);
       void addDepthTexture();
@@ -70,6 +69,22 @@ namespace slg {
       int m_colorBufferCount;
 
       bool m_editing;
+  };
+
+
+  /**
+   * Helper class that binds a FrameBuffer and sets up a
+   * correct viewport for it.
+   */
+  class FrameBufferState
+  {
+    public:
+      FrameBufferState(FrameBuffer & buffer);
+      ~FrameBufferState();
+
+    private:
+      FrameBuffer & m_buffer;
+      int m_viewport[4];
   };
   
 }

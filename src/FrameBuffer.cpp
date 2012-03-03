@@ -110,13 +110,28 @@ namespace slg {
     if (!m_editing)
     {
       glBindFramebuffer(GL_FRAMEBUFFER, m_id);
-      glViewport(0, 0, m_width, m_height);
     }
   }
 
   void FrameBuffer::unbind()
   {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  }
+
+  // -- FrameBufferState --
+
+  FrameBufferState::FrameBufferState(FrameBuffer & buffer)
+    : m_buffer(buffer)
+  {
+    glGetIntegerv(GL_VIEWPORT, m_viewport);
+    m_buffer.bind();
+    glViewport(0, 0, m_buffer.width(), m_buffer.height());
+  }
+
+  FrameBufferState::~FrameBufferState()
+  {
+    m_buffer.unbind();
+    glViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
   }
   
 }
