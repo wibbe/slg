@@ -22,7 +22,6 @@ class GameWindow : public slg::Window
       setTitle("SLG Example");
       
       m_camera.setPosition(0, 0, 5);
-      m_camera.perspective(60.0f, 800.0 / 500.0f, 1.0, 500.0);
       
       m_mesh.load("../../example/data/suzanne.obj", true);
 
@@ -55,11 +54,16 @@ class GameWindow : public slg::Window
 
       return !isKeyDown(GLFW_KEY_ESC);
     }
+
+    void resize(int width, int height)
+    {
+      glViewport(0, 0, width, height);
+      m_camera.perspective(60.0f, width / (float)height, 1.0, 500.0);
+    }
     
     void paint()
     {
       m_camera.update();
-      glViewport(0, 0, 800, 500);
 
       glm::mat4 model = glm::rotate(glm::mat4(1.0), (float)(time() * 30.0), glm::vec3(0, 1, 0));
       glm::mat4 modelViewProj = m_camera.projection() * m_camera.view() * model;
