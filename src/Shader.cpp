@@ -162,6 +162,15 @@ namespace slg {
     }
   }
   
+  void Shader::uniform(const char * name, glm::vec2 const& vec)
+  {
+    if (m_program)
+    {
+      GLuint pos = glGetUniformLocation(m_program, name);
+      glUniform2f(pos, vec.x, vec.y);
+    }
+  }
+
   void Shader::uniform(const char * name, glm::vec3 const& vec)
   {
     if (m_program)
