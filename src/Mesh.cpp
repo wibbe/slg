@@ -105,7 +105,7 @@ namespace slg {
     return true;
   }
 
-  void Mesh::addBuffer(Attributes attrib, void * data, size_t size)
+  void Mesh::addBuffer(Attributes attrib, const void * data, size_t size)
   {
     assert(attrib < BUFFER_COUNT && m_buffers[attrib] == 0);
 

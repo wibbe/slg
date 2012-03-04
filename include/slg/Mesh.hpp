@@ -38,7 +38,7 @@ namespace slg {
         addBuffer(attrib, &data[0], data.size() * sizeof(T));
       }
 
-      void addBuffer(Attributes attrib, void * data, size_t size);
+      void addBuffer(Attributes attrib, const void * data, size_t size);
      
       void draw() const;
       
