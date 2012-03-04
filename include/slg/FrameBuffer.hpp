@@ -78,11 +78,11 @@ namespace slg {
    * Helper class that binds a FrameBuffer and sets up a
    * correct viewport for it.
    */
-  class FrameBufferState
+  class FrameBufferTarget
   {
     public:
-      FrameBufferState(FrameBuffer & buffer);
-      ~FrameBufferState();
+      FrameBufferTarget(FrameBuffer & buffer);
+      ~FrameBufferTarget();
 
     private:
       FrameBuffer & m_buffer;

@@ -13,11 +13,16 @@ namespace slg {
       m_patchCount(width / patchSize, height / patchSize),
       m_patchMesh(),
       m_heightMap(width, height),
+      m_heightMapBuffer(width, height),
       m_shader()
   {
     m_heightMap.edit();
     m_heightMap.addColorTexture(GL_R32F);
     m_heightMap.done();
+
+    m_heightMapBuffer.edit();
+    m_heightMapBuffer.addColorTexture(GL_R32F);
+    m_heightMapBuffer.done();
 
     std::vector<glm::vec3> vertices;
     std::vector<unsigned short> indicies;
@@ -49,7 +54,7 @@ namespace slg {
     m_shader.link();
 
     // Setup heightmap
-    FrameBufferState state(m_heightMap);
+    FrameBufferTarget target(m_heightMap);
     glClearColor(0, 0, 0, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
   }

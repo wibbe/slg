@@ -97,9 +97,9 @@ namespace slg {
     glBindTexture(GL_TEXTURE_2D, m_colorBuffers[colorBuffer]);
   }
 
-  // -- FrameBufferState --
+  // -- FrameBufferTarget --
 
-  FrameBufferState::FrameBufferState(FrameBuffer & buffer)
+  FrameBufferTarget::FrameBufferTarget(FrameBuffer & buffer)
     : m_buffer(buffer)
   {
     glGetIntegerv(GL_VIEWPORT, m_viewport);
@@ -107,7 +107,7 @@ namespace slg {
     glViewport(0, 0, m_buffer.width(), m_buffer.height());
   }
 
-  FrameBufferState::~FrameBufferState()
+  FrameBufferTarget::~FrameBufferTarget()
   {
     m_buffer.unbind();
     glViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
