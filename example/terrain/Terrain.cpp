@@ -47,6 +47,7 @@ namespace slg {
 
   void Terrain::draw()
   {
+    m_heightMap.bindTexture(0, 0);
   }
 
 }
