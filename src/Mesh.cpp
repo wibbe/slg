@@ -104,6 +104,16 @@ namespace slg {
     
     return true;
   }
+
+  void Mesh::addBuffer(Attributes attrib, void * data, size_t size)
+  {
+    assert(attrib < BUFFER_COUNT && m_buffers[attrib] == 0);
+
+    m_buffers[attrib] = new Buffer(attrib == INDICIES ? GL_ELEMENT_ARRAY_BUFFER : GL_ARRAY_BUFFER);
+    m_buffers[attrib]->upload(data, size, GL_STATIC_DRAW);
+
+    m_loaded = true;
+  }
   
   void Mesh::draw() const
   {

@@ -31,6 +31,14 @@ namespace slg {
       
       void destroy();
       bool load(const char * filename, bool useIndicies = true, bool computeTangents = false);
+
+      template <typename T>
+      void addBuffer(Attributes attrib, std::vector<T> const& data)
+      {
+        addBuffer(attrib, &data[0], data.size() * sizeof(T));
+      }
+
+      void addBuffer(Attributes attrib, void * data, size_t size);
      
       void draw() const;
       
