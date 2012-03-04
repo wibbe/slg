@@ -22,36 +22,9 @@ namespace slg {
       m_colorBuffers[i] = 0;
   }
 
-  FrameBuffer::FrameBuffer(FrameBuffer const& copy)
-    : m_id(copy.m_id),
-      m_width(copy.m_width),
-      m_height(copy.m_height),
-      m_editing(copy.m_editing),
-      m_depthBuffer(copy.m_depthBuffer),
-      m_colorBufferCount(copy.m_colorBufferCount)
-  {
-    for (int i = 0; i < MAX_COLOR_BUFFERS; ++i)
-      m_colorBuffers[i] = copy.m_colorBuffers[i];
-  }
-  
   FrameBuffer::~FrameBuffer()
   {
     glDeleteFramebuffers(1, &m_id);
-  }
-
-  FrameBuffer const& FrameBuffer::operator = (FrameBuffer const& copy)
-  {
-    m_id = copy.m_id;
-    m_width = copy.m_width;
-    m_height = copy.m_height;
-    m_editing = copy.m_editing;
-    m_depthBuffer = copy.m_depthBuffer;
-    m_colorBufferCount = copy.m_colorBufferCount;
-
-    for (int i = 0; i < MAX_COLOR_BUFFERS; ++i)
-      m_colorBuffers[i] = copy.m_colorBuffers[i];
-
-    return *this;
   }
 
   void FrameBuffer::edit()
@@ -71,7 +44,7 @@ namespace slg {
     m_editing = false;
   }
 
-  void FrameBuffer::addColorTexture(unsigned int format, unsigned int type)
+  void FrameBuffer::addColorTexture(unsigned int internalFormat)
   {
     assert(m_editing && m_colorBufferCount < MAX_COLOR_BUFFERS);
 
@@ -79,13 +52,16 @@ namespace slg {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, type, 0);
- 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);    
+    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + m_colorBufferCount, texture, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
     glBindTexture(GL_TEXTURE_2D, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + m_colorBufferCount, GL_TEXTURE_2D, texture, 0);
 
     m_colorBuffers[m_colorBufferCount++] = texture;
   }

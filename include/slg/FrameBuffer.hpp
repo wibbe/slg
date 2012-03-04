@@ -30,12 +30,13 @@ namespace slg {
     private:
       static const int MAX_COLOR_BUFFERS = 2;
 
+      FrameBuffer(FrameBuffer const& copy) { } 
+      FrameBuffer const& operator = (FrameBuffer const& copy) { return *this; }
+
     public:
       FrameBuffer(int width, int height);
-      FrameBuffer(FrameBuffer const& copy);
       ~FrameBuffer();
 
-      FrameBuffer const& operator = (FrameBuffer const& copy);
 
       void edit();
       void done();
@@ -47,9 +48,9 @@ namespace slg {
        * - GL_RGB, GL_RGBA, GL_ALPHA, and so on...
        * 
        * Type should be:
-       * - GL_UNSIGNED_BYTE, GL_FLOAT
+       * - GL_UNSIGNED_BYTE, GL_FLOAT, GL_R32F
        */
-      void addColorTexture(unsigned int format, unsigned int type);
+      void addColorTexture(unsigned int internalFormat);
       void addDepthTexture();
       void addDepthBuffer();
 
