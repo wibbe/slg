@@ -39,6 +39,13 @@ namespace slg {
                       std::vector<glm::vec3> & outNormals,
                       std::vector<glm::vec3> & outTangents,
                       std::vector<glm::vec3> & outBitangents);
+
+  inline void pushTriangle(std::vector<unsigned short> & data, unsigned short a, unsigned short b, unsigned short c)
+  {
+    data.push_back(a);
+    data.push_back(b);
+    data.push_back(c);
+  }
   
 }
 
