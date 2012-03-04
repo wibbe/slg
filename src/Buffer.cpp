@@ -28,7 +28,7 @@ namespace slg {
     glBindBuffer(m_target, m_id);
   }
   
-  void Buffer::upload(void * data, int len, unsigned int mode)
+  void Buffer::upload(const void * data, int len, unsigned int mode)
   {
     assert(m_id != 0);
     

@@ -46,7 +46,7 @@ namespace slg {
       /// Mode should be one of the following:
       /// * GL_STATIC_DRAW
       /// * GL_DYNAMIC_DRAW
-      void upload(void * data, int len, unsigned int mode);
+      void upload(const void * data, int len, unsigned int mode);
       
       int target() const { return m_target; }
       
