@@ -39,6 +39,8 @@ namespace slg {
       }
 
       void addBuffer(Attributes attrib, const void * data, size_t size);
+
+      void setIndexCount(unsigned int count) { m_indexCount = count; }
      
       void draw() const;
       
