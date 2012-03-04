@@ -43,7 +43,7 @@ namespace slg {
       
       glm::vec3 const& position() const { return m_position; }
       
-      glm::mat4 const& orientation() const { return m_orientation; }
+      glm::quat const& orientation() const { return m_orientation; }
       
       void move(float amount);
       void strafe(float amount);
@@ -61,7 +61,7 @@ namespace slg {
       glm::vec3 m_euler;
       glm::vec3 m_position;
 
-      glm::mat4 m_orientation;
+      glm::quat m_orientation;
       glm::mat4 m_view;
       glm::mat4 m_projection;
   };

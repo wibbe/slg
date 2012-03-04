@@ -14,7 +14,7 @@ namespace slg {
     : m_changed(true),
       m_euler(),
       m_position(),
-      m_orientation(1.0),
+      m_orientation(),
       m_projection(1.0),
       m_view(1.0)
   {
@@ -31,25 +31,25 @@ namespace slg {
   
   void Camera::move(float amount)
   {
-    m_position += glm::vec3(glm::transpose(m_orientation) * glm::vec4(0.0f, 0.0f, -amount, 0.0f));
+    m_position += glm::inverse(m_orientation) * glm::vec3(0.0f, 0.0f, -amount);
     m_changed = true;
   }
   
   void Camera::strafe(float amount)
   {
-    m_position += glm::vec3(glm::transpose(m_orientation) * glm::vec4(amount, 0.0f, 0.0f, 0.0f));
+    m_position += glm::inverse(m_orientation) * glm::vec3(amount, 0.0f, 0.0f);
     m_changed = true;
   }
   
   void Camera::yaw(float angle)
   {
-    m_euler.y += glm::radians(angle);
+    m_orientation = m_orientation * glm::rotate(glm::quat(), angle, glm::vec3(0, 1, 0));
     m_changed = true;
   }
   
   void Camera::pitch(float angle)
   {
-    m_euler.x += glm::radians(angle);
+    m_orientation = glm::rotate(glm::quat(), angle, glm::vec3(1, 0, 0)) * m_orientation;
     m_changed = true;
   }
 
@@ -63,9 +63,7 @@ namespace slg {
   {
     if (m_changed)
     {
-      m_orientation = glm::yawPitchRoll(m_euler.y, m_euler.x, m_euler.z);
-      m_view = m_orientation * glm::translate(-m_position);
-
+      m_view = glm::toMat4(m_orientation) * glm::translate(-m_position);
       m_changed = false;
     }    
   }
