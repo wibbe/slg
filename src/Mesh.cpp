@@ -119,17 +119,26 @@ namespace slg {
   {
     assert(m_loaded);
     
-    glEnableVertexAttribArray(VERTEX);
-    m_buffers[VERTEX]->bind();
-    glVertexAttribPointer(VERTEX, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    if (m_buffers[VERTEX])
+    {
+      glEnableVertexAttribArray(VERTEX);
+      m_buffers[VERTEX]->bind();
+      glVertexAttribPointer(VERTEX, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    }
     
-    glEnableVertexAttribArray(NORMAL);
-    m_buffers[NORMAL]->bind();
-    glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    if (m_buffers[NORMAL])
+    {
+      glEnableVertexAttribArray(NORMAL);
+      m_buffers[NORMAL]->bind();
+      glVertexAttribPointer(NORMAL, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    }
     
-    glEnableVertexAttribArray(UV);  
-    m_buffers[UV]->bind();
-    glVertexAttribPointer(UV, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    if (m_buffers[UV])
+    {
+      glEnableVertexAttribArray(UV);  
+      m_buffers[UV]->bind();
+      glVertexAttribPointer(UV, 2, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    }
   
     if (m_buffers[INDICIES])
       m_buffers[INDICIES]->bind();
@@ -139,7 +148,10 @@ namespace slg {
       glEnableVertexAttribArray(TANGENT);
       m_buffers[TANGENT]->bind();
       glVertexAttribPointer(TANGENT, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
+    }
       
+    if (m_buffers[BINORMAL])
+    {
       glEnableVertexAttribArray(BINORMAL);
       m_buffers[BINORMAL]->bind();
       glVertexAttribPointer(BINORMAL, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
