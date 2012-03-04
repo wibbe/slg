@@ -22,6 +22,7 @@ namespace slg {
       int m_height;
       int m_patchSize;
 
+      Mesh m_patchMesh;
       FrameBuffer m_heightMap;
 
       Shader m_shader;
