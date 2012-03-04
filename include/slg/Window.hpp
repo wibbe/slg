@@ -39,8 +39,6 @@ namespace slg {
       void run();
       bool step();
       
-      bool isKeyDown(int key);
-      
       void setTitle(std::string const& title);
       
       virtual void resize(int width, int height) { }

@@ -17,6 +17,7 @@ namespace slg {
       int mouseRelY();
       
       bool mouseButton(int button) const;
+      bool isKeyDown(int key) const;
       
       void setMousePos(int x, int y);
       void setMouseButton(int button, bool down);

@@ -4,6 +4,7 @@
 #include "slg/Buffer.hpp"
 #include "slg/Shader.hpp"
 #include "slg/Mesh.hpp"
+#include "slg/CameraControllers.hpp"
 
 #include "GL/glew.h"
 #include "GL/glfw.h"
@@ -35,24 +36,9 @@ class GameWindow : public slg::Window
     
     bool update(double dt)
     {
-      if (isKeyDown('W'))
-        m_camera.move(10.0 * dt);
-      else if (isKeyDown('S'))
-        m_camera.move(-10.0 * dt);
+      flyController(m_camera, input(), dt);
 
-      if (isKeyDown('D'))
-        m_camera.strafe(5.0 * dt);
-      else if (isKeyDown('A'))
-        m_camera.strafe(-5.0 * dt);
-
-      if (input().mouseButton(1))
-      {
-        m_camera.yaw(input().mouseRelX() * 0.3);
-        m_camera.pitch(input().mouseRelY() * 0.3);
-      }
-
-
-      return !isKeyDown(GLFW_KEY_ESC);
+      return !input().isKeyDown(GLFW_KEY_ESC);
     }
 
     void resize(int width, int height)

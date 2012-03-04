@@ -1,5 +1,6 @@
 
 #include "slg/Input.hpp"
+#include "GL/glfw.h"
 
 #include <cassert>
 
@@ -33,6 +34,11 @@ namespace slg {
   {
     assert(button < MOUSE_BUTTON_COUNT);
     return m_mouseButtons[button];
+  }
+
+  bool Input::isKeyDown(int key) const
+  {
+    return glfwGetKey(key);
   }
   
   void Input::setMousePos(int x, int y)

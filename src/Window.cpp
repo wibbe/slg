@@ -100,11 +100,6 @@ namespace slg {
 		return continueOn && glfwGetWindowParam(GLFW_OPENED);
   }
   
-  bool Window::isKeyDown(int key)
-  {
-    return glfwGetKey(key);
-  }
-  
   void Window::setTitle(std::string const& title)
   {
     glfwSetWindowTitle(title.c_str());

@@ -10,6 +10,7 @@ SET(SOURCE
   File.cpp
   Mesh.cpp
   MeshHelpers.cpp
+  CameraControllers.cpp
   
   glew.c
   soil/SOIL.c
