@@ -28,7 +28,7 @@ namespace slg {
   class FrameBuffer
   {
     private:
-      static const int MAX_COLOR_BUFFERS = 2;
+      static const int MAX_COLOR_BUFFERS = 4;
 
       FrameBuffer(FrameBuffer const& copy) { } 
       FrameBuffer const& operator = (FrameBuffer const& copy) { return *this; }
@@ -51,7 +51,6 @@ namespace slg {
        * - GL_UNSIGNED_BYTE, GL_FLOAT, GL_R32F
        */
       void addColorTexture(unsigned int internalFormat);
-      void addDepthTexture();
       void addDepthBuffer();
 
       int width() const { return m_width; }
@@ -59,6 +58,8 @@ namespace slg {
 
       void bind();
       void unbind();
+
+      void bindTexture(int colorBuffer, int textureUnit);
 
     private:
       unsigned int m_id;

@@ -66,11 +66,6 @@ namespace slg {
     m_colorBuffers[m_colorBufferCount++] = texture;
   }
 
-  void FrameBuffer::addDepthTexture()
-  {
-    assert(m_editing);
-  }
-
   void FrameBuffer::addDepthBuffer()
   {
     assert(m_editing && m_depthBuffer == 0);
@@ -92,6 +87,14 @@ namespace slg {
   void FrameBuffer::unbind()
   {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  }
+
+  void FrameBuffer::bindTexture(int colorBuffer, int textureUnit)
+  {
+    assert(colorBuffer > m_colorBufferCount);
+    
+    glActiveTexture(GL_TEXTURE0 + textureUnit);
+    glBindTexture(GL_TEXTURE_2D, m_colorBuffers[colorBuffer]);
   }
 
   // -- FrameBufferState --
