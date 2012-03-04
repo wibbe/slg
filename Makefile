@@ -13,6 +13,12 @@ compile:
 	make -C build && (cd build/bin && ./unit_test)
 
 run:
+	(cd build/bin && ./terrain-edit)
+
+debug:
+	(cd build/bin && gdb ./terrain-edit)
+
+run-example:
 	(cd build/bin && ./example)
 
 test:
