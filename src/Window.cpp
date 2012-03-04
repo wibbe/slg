@@ -53,7 +53,14 @@ namespace slg {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
-    glEnable(GL_TEXTURE_2D);
+
+    for (int texUnit = 0; texUnit < 4; ++texUnit)
+    {
+      glActiveTexture(GL_TEXTURE0 + texUnit);
+      glEnable(GL_TEXTURE_2D);
+    }
+
+    glActiveTexture(GL_TEXTURE0);
     
   }
   
