@@ -27,7 +27,7 @@ class GameWindow : public slg::Window
 
       m_terrain = new slg::Terrain(512, 512, 64);
       
-      m_camera.setPosition(0, 0, 5);
+      m_camera.setPosition(0, 1, 6);
       
       m_mesh.load("../../example/data/suzanne.obj", true);
 
@@ -54,21 +54,25 @@ class GameWindow : public slg::Window
     
     void paint()
     {
+      glClearColor(0.7, 0.8, 0.9, 1.0);
+		  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       m_camera.update();
 
-      glm::mat4 model = glm::rotate(glm::mat4(1.0), (float)(time() * 30.0), glm::vec3(0, 1, 0));
-      glm::mat4 modelViewProj = m_camera.projection() * m_camera.view() * model;
+      //glm::mat4 model = glm::rotate(glm::mat4(1.0), (float)(time() * 30.0), glm::vec3(0, 1, 0));
+      //glm::mat4 modelViewProj = m_camera.projection() * m_camera.view() * model;
 
-      //glRotatef(time() * 30.0, 0, 1, 0);
-      
-      m_shader.bind();
-      m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.5 + std::sin(time() * 4.0) * 0.5);
-      m_shader.uniform("modelViewProj", modelViewProj);
-      m_shader.uniform("model", model);
-      
-      m_mesh.draw();
+      ////glRotatef(time() * 30.0, 0, 1, 0);
+      //
+      //m_shader.bind();
+      //m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.5 + std::sin(time() * 4.0) * 0.5);
+      //m_shader.uniform("modelViewProj", modelViewProj);
+      //m_shader.uniform("model", model);
+      //
+      //m_mesh.draw();
 
-      m_shader.unbind();
+      //m_shader.unbind();
+
+      m_terrain->draw(m_camera);
     }
     
   private:

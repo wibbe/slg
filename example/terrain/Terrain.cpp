@@ -2,6 +2,7 @@
 #include "Terrain.hpp"
 
 #include "slg/MeshHelpers.hpp"
+#include "glm/gtx/transform.hpp"
 
 namespace slg {
 
@@ -9,6 +10,7 @@ namespace slg {
     : m_width(width),
       m_height(height),
       m_patchSize(patchSize),
+      m_patchCount(width / patchSize, height / patchSize),
       m_patchMesh(),
       m_heightMap(width, height),
       m_shader()
@@ -39,15 +41,60 @@ namespace slg {
 
     m_patchMesh.addBuffer(Mesh::VERTEX, vertices);
     m_patchMesh.addBuffer(Mesh::INDICIES, indicies);
+    m_patchMesh.setIndexCount(indicies.size());
+
+    m_shader.load("../../example/data/Terrain.vert", GL_VERTEX_SHADER);
+    m_shader.load("../../example/data/Terrain.frag", GL_FRAGMENT_SHADER);
+    m_shader.setupMeshAttributes();
+    m_shader.link();
+
+    // Setup heightmap
+    FrameBufferState state(m_heightMap);
+    glClearColor(0, 0, 0, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
   }
 
   Terrain::~Terrain()
   {
   }
 
-  void Terrain::draw()
+  void Terrain::draw(Camera const& camera)
   {
+    m_shader.bind();
     m_heightMap.bindTexture(0, 0);
+
+    const glm::mat4 viewProj = camera.projection() * camera.view();
+
+    float offsetX = m_patchCount.x * -0.5;
+    float offsetZ = m_patchCount.y * -0.5;
+
+    m_shader.uniform("heightMap", 0);
+
+    glm::vec2 texOffset(0.0);
+    const glm::vec2 texDelta(1.0 / m_patchCount.x, 1.0 / m_patchCount.y);
+
+    for (int z = 0; z < m_patchCount.y; ++z)
+    {
+      for (int x = 0; x < m_patchCount.x; ++x)
+      {
+        const glm::mat4 model = glm::translate(glm::vec3(offsetX + x, 0.0, offsetZ + z));
+        const glm::mat4 modelViewProj = viewProj * model;
+        
+        m_shader.uniform("modelViewProj", modelViewProj);
+        m_shader.uniform("model", model);
+        m_shader.uniform("color", x % 2, 0, z % 2);
+        m_shader.uniform("texOffset", texOffset);
+        m_shader.uniform("texScale", texDelta);
+
+        m_patchMesh.draw();
+
+        texOffset.x += texDelta.x;
+      }
+
+      texOffset.y += texDelta.y;
+    }
+
+    m_shader.unbind();
   }
 
 }
