@@ -91,7 +91,7 @@ namespace slg {
 
   void FrameBuffer::bindTexture(int colorBuffer, int textureUnit)
   {
-    assert(colorBuffer > m_colorBufferCount);
+    assert(colorBuffer < m_colorBufferCount);
     
     glActiveTexture(GL_TEXTURE0 + textureUnit);
     glBindTexture(GL_TEXTURE_2D, m_colorBuffers[colorBuffer]);
