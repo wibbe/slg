@@ -22,7 +22,9 @@ namespace slg {
 
       void draw(Camera const& camera);
 
-      void applyTool(Tool & tool, Tool::Command command, float dt);
+      bool worldToLocal(glm::vec3 const& world, glm::vec2 & local);
+
+      void applyTool(Tool & tool, Tool::Command command, glm::vec2 const& pos, float dt);
 
     private:
       int m_width;

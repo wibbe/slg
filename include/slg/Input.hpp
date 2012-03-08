@@ -2,6 +2,8 @@
 #ifndef SLG_INPUT_HPP
 #define SLG_INPUT_HPP
 
+#include "glm/glm.hpp"
+
 namespace slg {
   
   class Input
@@ -15,6 +17,8 @@ namespace slg {
       int mouseY() const { return m_mouseY; }
       int mouseRelX();
       int mouseRelY();
+
+      glm::ivec2 mousePosition() const { return glm::ivec2(m_mouseX, m_mouseY); }
       
       bool mouseButton(int button) const;
       bool isKeyDown(int key) const;

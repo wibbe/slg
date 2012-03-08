@@ -100,10 +100,30 @@ namespace slg {
     m_shader.unbind();
   }
 
-  void Terrain::applyTool(Tool & tool, Tool::Command command, float dt)
+  bool Terrain::worldToLocal(glm::vec3 const& world, glm::vec2 & local)
+  {
+    glm::vec2 start = glm::vec2(m_patchCount) * -0.5f;
+    glm::vec2 size = glm::vec2(m_patchCount);
+    glm::vec2 pos(world.x, world.z);
+
+    if (pos.x < start.x ||
+        pos.y < start.y ||
+        pos.x > (start.x + size.x) ||
+        pos.y > (start.y + size.y))
+      return false;
+
+    pos += start;
+    pos /= size;
+    //local = pos;
+    local = glm::vec2(1.0f) + pos;
+
+    return true;
+  }
+
+  void Terrain::applyTool(Tool & tool, Tool::Command command, glm::vec2 const& pos, float dt)
   {
     m_currentHeightMap = (m_currentHeightMap + 1) % 2;
-    tool.apply(command, *m_heightMaps[(m_currentHeightMap + 1) % 2], *m_heightMaps[m_currentHeightMap], dt);
+    tool.apply(command, *m_heightMaps[(m_currentHeightMap + 1) % 2], *m_heightMaps[m_currentHeightMap], pos, dt);
   }
 
 }

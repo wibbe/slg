@@ -100,7 +100,6 @@ namespace slg {
     
     bool continueOn = update(dt);
     
-		
     paint();
 		
 		glfwSwapBuffers();

@@ -67,5 +67,41 @@ namespace slg {
       m_changed = false;
     }    
   }
- 
+
+  glm::vec3 Camera::pick(glm::ivec2 const& mousePos)
+  {
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    GLfloat zCursor;
+    float winX = (float)mousePos.x;
+    float winY = (float)viewport[3] - (float)mousePos.y;
+    glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &zCursor);
+
+    glm::vec3 pos = glm::unProject(glm::vec3(winX, winY, zCursor), m_view, m_projection, 
+                                   glm::ivec4(viewport[0], viewport[1], viewport[2], viewport[3]));
+
+    //printf("World pos: %s\n", glm::to_string(pos).c_str());
+    return pos;
+  }
+
+  /*
+ GLint viewport[4];
+GLdouble modelview[16];
+GLdouble projection[16];
+GLfloat winX,winY;
+glGetIntegerv(GL_VIEWPORT, viewport);
+glGetDoublev(GL_MODELVIEW_MATRIX, modelview);
+glGetDoublev(GL_PROJECTION_MATRIX, projection);
+
+// obtain the Z position (not world coordinates but in range 0 - 1)
+GLfloat z_cursor;
+winX = (float)x_cursor;
+winY = (float)viewport[3]-(float)y_cursor;
+glReadPixels(winX, winY, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &z_cursor);
+
+// obtain the world coordinates
+GLdouble x, y, z;
+gluUnProject(winX, winY, z_cursor, modelview, projection, viewport, &x, &y, &z);
+*/
 }

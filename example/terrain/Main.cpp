@@ -44,12 +44,25 @@ class GameWindow : public slg::Window
     {
       flyController(m_camera, input(), dt);
 
+      glm::vec2 pos;
+
+      const bool ridged = input().isKeyDown('R');
+      const bool turbulence = input().isKeyDown('T');
+
+      if (ridged || turbulence)
+      {
+        if (m_terrain->worldToLocal(m_worldPos, pos))
+        {
+          if (turbulence)
+            m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, pos, dt);
+
+          if (ridged)
+            m_terrain->applyTool(m_tool, slg::Tool::RIDGED, pos, dt);
+        }
+      }
+
       if (input().isKeyDown('C'))
-        m_terrain->applyTool(m_tool, slg::Tool::CLEAR, 0.0);
-      if (input().isKeyDown('T'))
-        m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, dt);
-      if (input().isKeyDown('R'))
-        m_terrain->applyTool(m_tool, slg::Tool::RIDGED, dt);
+        m_terrain->applyTool(m_tool, slg::Tool::CLEAR, pos, 0.0);
 
       return !input().isKeyDown(GLFW_KEY_ESC);
     }
@@ -66,21 +79,9 @@ class GameWindow : public slg::Window
 		  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       m_camera.update();
 
-      //glm::mat4 model = glm::rotate(glm::mat4(1.0), (float)(time() * 30.0), glm::vec3(0, 1, 0));
-      //glm::mat4 modelViewProj = m_camera.projection() * m_camera.view() * model;
-
-      ////glRotatef(time() * 30.0, 0, 1, 0);
-      //
-      //m_shader.bind();
-      //m_shader.uniform("color", 0.5 + std::sin(time() * 1.5) * 0.5, 0.5 + std::sin(time() * 2.0) * 0.5, 0.5 + std::sin(time() * 4.0) * 0.5);
-      //m_shader.uniform("modelViewProj", modelViewProj);
-      //m_shader.uniform("model", model);
-      //
-      //m_mesh.draw();
-
-      //m_shader.unbind();
-
       m_terrain->draw(m_camera);
+
+      m_worldPos = m_camera.pick(input().mousePosition());
     }
     
   private:
@@ -91,6 +92,8 @@ class GameWindow : public slg::Window
     
     slg::Terrain * m_terrain;
     slg::Tool m_tool;
+
+    glm::vec3 m_worldPos;
 };
 
 

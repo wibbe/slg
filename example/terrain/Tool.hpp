@@ -6,6 +6,8 @@
 #include "slg/Mesh.hpp"
 #include "slg/Shader.hpp"
 
+#include "glm/glm.hpp"
+
 namespace slg {
 
   class Tool
@@ -22,7 +24,7 @@ namespace slg {
       Tool();
       ~Tool();
 
-      void apply(Command command, FrameBuffer & source, FrameBuffer & target, float dt);
+      void apply(Command command, FrameBuffer & source, FrameBuffer & target, glm::vec2 const& pos, float dt);
 
     private:
       Mesh m_quad;

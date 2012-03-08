@@ -48,7 +48,7 @@ namespace slg {
   {
   }
 
-  void Tool::apply(Command command, FrameBuffer & source, FrameBuffer & target, float dt)
+  void Tool::apply(Command command, FrameBuffer & source, FrameBuffer & target, glm::vec2 const& pos, float dt)
   {
     switch (command)
     {
@@ -68,6 +68,7 @@ namespace slg {
 
           m_turbulence.bind();
           m_turbulence.uniform("dt", dt);
+          m_turbulence.uniform("pos", pos);
           m_turbulence.uniform("previous", 0);
           m_quad.draw();
           m_turbulence.unbind();
@@ -82,6 +83,7 @@ namespace slg {
 
           m_ridged.bind();
           m_ridged.uniform("dt", dt);
+          m_ridged.uniform("pos", pos);
           m_ridged.uniform("previous", 0);
           m_quad.draw();
           m_ridged.unbind();

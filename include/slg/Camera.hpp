@@ -54,6 +54,8 @@ namespace slg {
 
       glm::mat4 view() const { return m_view; }
       glm::mat4 projection() const { return m_projection; }
+
+      glm::vec3 pick(glm::ivec2 const& mousePos);
       
     private:
       bool m_changed;
