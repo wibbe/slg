@@ -10,6 +10,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Tool.hpp"
+
 namespace slg {
 
   class Terrain
@@ -20,6 +22,8 @@ namespace slg {
 
       void draw(Camera const& camera);
 
+      void applyTool(Tool & tool, float dt);
+
     private:
       int m_width;
       int m_height;
@@ -27,8 +31,9 @@ namespace slg {
       glm::ivec2 m_patchCount;
 
       Mesh m_patchMesh;
-      FrameBuffer m_heightMap;
-      FrameBuffer m_heightMapBuffer;
+      FrameBuffer * m_heightMaps[2];
+
+      int m_currentHeightMap;
 
       Shader m_shader;
   };

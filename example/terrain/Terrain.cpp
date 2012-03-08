@@ -1,5 +1,6 @@
 
 #include "Terrain.hpp"
+#include "Tool.hpp"
 
 #include "slg/MeshHelpers.hpp"
 #include "glm/gtx/transform.hpp"
@@ -12,17 +13,16 @@ namespace slg {
       m_patchSize(patchSize),
       m_patchCount(width / patchSize, height / patchSize),
       m_patchMesh(),
-      m_heightMap(width, height),
-      m_heightMapBuffer(width, height),
+      m_currentHeightMap(0),
       m_shader()
   {
-    m_heightMap.edit();
-    m_heightMap.addColorTexture(GL_R32F);
-    m_heightMap.done();
-
-    m_heightMapBuffer.edit();
-    m_heightMapBuffer.addColorTexture(GL_R32F);
-    m_heightMapBuffer.done();
+    for (int i = 0; i < 2; ++i)
+    {
+      m_heightMaps[i] = new FrameBuffer(width, height);
+      m_heightMaps[i]->edit();
+      m_heightMaps[i]->addColorTexture(GL_R32F);
+      m_heightMaps[i]->done();
+    }
 
     std::vector<glm::vec3> vertices;
     std::vector<unsigned short> indicies;
@@ -54,19 +54,20 @@ namespace slg {
     m_shader.link();
 
     // Setup heightmap
-    FrameBufferTarget target(m_heightMap);
-    glClearColor(0, 0, 0, 0);
-		glClear(GL_COLOR_BUFFER_BIT);
+    ClearTool clear;
+    clear.apply(*m_heightMaps[1], *m_heightMaps[0], 0.0);
   }
 
   Terrain::~Terrain()
   {
+    delete m_heightMaps[0];
+    delete m_heightMaps[1];
   }
 
   void Terrain::draw(Camera const& camera)
   {
     m_shader.bind();
-    m_heightMap.bindTexture(0, 0);
+    m_heightMaps[m_currentHeightMap]->bindTexture(0, 0);
 
     const glm::mat4 viewProj = camera.projection() * camera.view();
 
@@ -100,6 +101,12 @@ namespace slg {
     }
 
     m_shader.unbind();
+  }
+
+  void Terrain::applyTool(Tool & tool, float dt)
+  {
+    m_currentHeightMap = (m_currentHeightMap + 1) % 2;
+    tool.apply(*m_heightMaps[(m_currentHeightMap + 1) % 2], *m_heightMaps[m_currentHeightMap], dt);
   }
 
 }

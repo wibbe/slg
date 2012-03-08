@@ -13,6 +13,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include "Terrain.hpp"
+#include "Tool.hpp"
 
 #include <cmath>
 
@@ -42,6 +43,9 @@ class GameWindow : public slg::Window
     bool update(double dt)
     {
       flyController(m_camera, input(), dt);
+
+      if (input().isKeyDown('C'))
+        m_terrain->applyTool(m_clearTool, 0.0);
 
       return !input().isKeyDown(GLFW_KEY_ESC);
     }
@@ -82,6 +86,8 @@ class GameWindow : public slg::Window
     slg::Shader m_shader;
     
     slg::Terrain * m_terrain;
+
+    slg::ClearTool m_clearTool;
 };
 
 

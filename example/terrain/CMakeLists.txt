@@ -2,6 +2,7 @@
 SET(SOURCE
   Main.cpp
   Terrain.cpp
+  Tool.cpp
 )
 
 SET(LIBRARIES
