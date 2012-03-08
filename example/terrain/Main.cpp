@@ -5,6 +5,8 @@
 #include "slg/Shader.hpp"
 #include "slg/Mesh.hpp"
 #include "slg/CameraControllers.hpp"
+#include "slg/Tile.hpp"
+#include "slg/Texture.hpp"
 
 #include "GL/glew.h"
 #include "GL/glfw.h"
@@ -23,8 +25,10 @@ class GameWindow : public slg::Window
     GameWindow()
       : Window(800, 500),
         m_terrain(0),
+        m_tile(),
         m_toolPos(0.0, 0.0),
-        m_toolOnTerrain(false)
+        m_toolOnTerrain(false),
+        m_currentTool(0)
     {
       setTitle("Terrain Edit");
 
@@ -39,6 +43,8 @@ class GameWindow : public slg::Window
       m_shader.setupMeshAttributes();
       m_shader.link();
       
+      m_ridgeIcon.load("../../example/data/ridge.png");
+      
       glClearColor(0.7, 0.8, 0.9, 1.0);
     }
     
@@ -50,11 +56,8 @@ class GameWindow : public slg::Window
 
       if (m_toolOnTerrain)
       {
-        if (input().isKeyDown('T'))
-          m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, m_toolPos, dt);
-
-        if (input().isKeyDown('R'))
-          m_terrain->applyTool(m_tool, slg::Tool::RIDGED, m_toolPos, dt);
+        if (input().mouseButton(0) && !m_tile.hit() && m_currentTool != 0)
+          m_terrain->applyTool(m_tool, (slg::Tool::Command)m_currentTool, m_toolPos, dt);
       }
 
       if (input().isKeyDown('C'))
@@ -66,7 +69,7 @@ class GameWindow : public slg::Window
     void resize(int width, int height)
     {
       glViewport(0, 0, width, height);
-      m_camera.perspective(60.0f, width / (float)height, 0.1, 500.0); 
+      m_camera.perspective(60.0f, width / (float)height, 0.1, 500.0);
     }
     
     void paint()
@@ -78,6 +81,20 @@ class GameWindow : public slg::Window
       m_terrain->draw(m_camera, m_toolPos, m_toolOnTerrain);
 
       m_worldPos = m_camera.pick(input().mousePosition());
+      
+      glDisable(GL_DEPTH_TEST);
+      
+      m_tile.begin(ortho(), input().mousePosition(), input().mouseButton(0));      
+      m_tile.pushRow();
+      
+      if (m_tile.icon(m_ridgeIcon, 15))
+        m_currentTool = slg::Tool::TURBULENCE;
+      if (m_tile.icon(m_ridgeIcon, 15))
+        m_currentTool = slg::Tool::RIDGED;
+      
+      m_tile.pop();
+      
+      glEnable(GL_DEPTH_TEST);
     }
     
   private:
@@ -88,10 +105,17 @@ class GameWindow : public slg::Window
     
     slg::Terrain * m_terrain;
     slg::Tool m_tool;
+    
+    slg::Texture m_ridgeIcon;
+    
+    slg::Tile m_tile;
 
     glm::vec3 m_worldPos;
     glm::vec2 m_toolPos;
+    
     bool m_toolOnTerrain;
+    
+    int m_currentTool;
 };
 
 

@@ -11,6 +11,7 @@ SET(SOURCE
   Mesh.cpp
   MeshHelpers.cpp
   CameraControllers.cpp
+  Tile.cpp
   
   glew.c
   soil/SOIL.c
@@ -21,9 +22,9 @@ SET(SOURCE
 )
 
 SET(LIBRARIES
-  ${OPENGL_LIBRARIES}
-  ${GLFW_LIBRARIES}
-  ${EXTRA_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+    ${GLFW_LIBRARIES}
+    ${EXTRA_LIBRARIES}
 )
 
 ADD_LIBRARY(slg ${SOURCE})

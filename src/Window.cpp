@@ -1,5 +1,6 @@
 
 #include "slg/Window.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <GL/glew.h>
 #include <GL/glfw.h>
@@ -109,6 +110,15 @@ namespace slg {
   void Window::setTitle(std::string const& title)
   {
     glfwSetWindowTitle(title.c_str());
+  }
+  
+  glm::mat4 Window::ortho() const
+  {
+    int width;
+    int height;
+    glfwGetWindowSize(&width, &height);
+    
+    return glm::ortho(0.0f, (float)width, (float)height, (float)0.0f);
   }
   
 }

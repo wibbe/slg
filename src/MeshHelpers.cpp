@@ -280,9 +280,44 @@ namespace slg {
         outNormals.push_back(inNormals[i]);
         outTangents.push_back(inTangents[i]);
         outBitangents.push_back(inBitangents[i]);
-        outIndices.push_back((unsigned short)outVertices.size() - 1 );
+        outIndices.push_back((unsigned short)outVertices.size() - 1);
       }
     }
-  }  
+  } 
+  
+  void createQuad(Mesh & mesh, bool inClipSpace)
+  {
+    std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> coords;
+    std::vector<unsigned short> indicies;
+    
+    if (inClipSpace)
+    {
+      vertices.push_back(glm::vec3(-1, 1, 0));
+      vertices.push_back(glm::vec3(-1, -1, 0));
+      vertices.push_back(glm::vec3(1, -1, 0));
+      vertices.push_back(glm::vec3(1, 1, 0));
+    }
+    else
+    {
+      vertices.push_back(glm::vec3(0, 0, 0));
+      vertices.push_back(glm::vec3(0, 1, 0));
+      vertices.push_back(glm::vec3(1, 1, 0));
+      vertices.push_back(glm::vec3(1, 0, 0));
+    }
+
+    coords.push_back(glm::vec2(0, 1));
+    coords.push_back(glm::vec2(0, 0));
+    coords.push_back(glm::vec2(1, 0));
+    coords.push_back(glm::vec2(1, 1));
+
+    pushTriangle(indicies, 0, 1, 2);
+    pushTriangle(indicies, 0, 2, 3);
+    
+    mesh.addBuffer(Mesh::VERTEX, vertices);
+    mesh.addBuffer(Mesh::UV, coords);
+    mesh.addBuffer(Mesh::INDICIES, indicies);
+    mesh.setIndexCount(indicies.size());
+  }
 
 }

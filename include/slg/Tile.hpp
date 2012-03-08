@@ -20,50 +20,76 @@
  * THE SOFTWARE.
  */
 
-#ifndef SLG_CAMERA_HPP
-#define SLG_CAMERA_HPP
+#ifndef SLG_TILE_HPP
+#define SLG_TILE_HPP
 
+#include "slg/Mesh.hpp"
+#include "slg/Shader.hpp"
+#include "slg/Texture.hpp"
 #include "glm/glm.hpp"
-#include "glm/gtc/quaternion.hpp"
+
+#include <stack>
 
 namespace slg {
   
-  class Camera
+  class Tile
   {
+    private:
+      enum LayoutDir
+      {
+        ROW,
+        STACK
+      };
+      
+      enum MouseState
+      {
+        NONE,
+        PRESS,
+        RELEASE
+      };
+      
+      struct State
+      {
+        LayoutDir dir;
+        int max;
+        glm::ivec2 pos;
+      };
+      
     public:
-      Camera();
-      virtual ~Camera();
+      Tile();
       
-      void update();
+      void begin(glm::mat4 const& projection, glm::ivec2 const& mousePos, bool mouseDown);
       
-      void perspective(float fov, float aspect, float near, float far);
+      void pushRow();
+      void pushStack();
+      void pop();
       
-      void setPosition(glm::vec3 const& pos) { m_position = pos; m_changed = true; }
-      void setPosition(float x, float y, float z) { setPosition(glm::vec3(x, y, z)); m_changed = true; }
+      bool icon(Texture & tex, int padding = 0);
       
-      glm::vec3 const& position() const { return m_position; }
-      glm::quat const& orientation() const { return m_orientation; }
-      
-      void move(float amount);
-      void strafe(float amount);
-      
-      void yaw(float angle);
-      void pitch(float angle);
-      void roll(float angle);
-
-      glm::mat4 const& view() const { return m_view; }
-      glm::mat4 const& projection() const { return m_projection; }
-
-      glm::vec3 pick(glm::ivec2 const& mousePos);
+      bool hit() const { return m_hit; }
       
     private:
-      bool m_changed;
+      void advance(int width, int height);
+      glm::ivec2 position();
+      
+      State & state() { return m_state.top(); }
+      
+      bool isInside(glm::ivec2 const& start, glm::ivec2 const& size, glm::ivec2 const& point);
+      
+    private:
+      std::stack<State> m_state;
+      
+      Mesh m_quad;
+      Shader m_textureShader;
 
-      glm::vec3 m_euler;
-      glm::vec3 m_position;
-
-      glm::quat m_orientation;
-      glm::mat4 m_view;
+      int m_margin;
+      
+      glm::ivec2 m_mousePos;
+      bool m_mouseDown;
+      MouseState m_mouseState;
+      
+      bool m_hit;
+      
       glm::mat4 m_projection;
   };
   

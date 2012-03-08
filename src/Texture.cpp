@@ -59,11 +59,14 @@ namespace slg {
   
   void Texture::bind(int unit)
   {
-  
+    glActiveTexture(GL_TEXTURE0 + unit);
+    glBindTexture(GL_TEXTURE_2D, m_id);  
   }
   
   void Texture::unbind(int unit)
   {
+    glActiveTexture(GL_TEXTURE0 + unit);
+    glBindTexture(GL_TEXTURE_2D, 0);    
   }
   
 }

@@ -25,6 +25,7 @@
 
 #include <string>
 #include "slg/Input.hpp"
+#include "glm/glm.hpp"
 
 namespace slg {
   
@@ -49,6 +50,8 @@ namespace slg {
       
       Input const& input() const { return m_input; }
       Input & input() { return m_input; }
+      
+      glm::mat4 ortho() const;
       
     private:
       double m_lastTimeStamp;

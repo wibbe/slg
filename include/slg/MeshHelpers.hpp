@@ -3,6 +3,7 @@
 #define SLG_MESH_HELPERS_HPP
 
 #include "glm/glm.hpp"
+#include "slg/Mesh.hpp"
 
 #include <vector>
 
@@ -39,6 +40,8 @@ namespace slg {
                       std::vector<glm::vec3> & outNormals,
                       std::vector<glm::vec3> & outTangents,
                       std::vector<glm::vec3> & outBitangents);
+                      
+  void createQuad(Mesh & mesh, bool inClipSpace);
 
   inline void pushTriangle(std::vector<unsigned short> & data, unsigned short a, unsigned short b, unsigned short c)
   {

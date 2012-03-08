@@ -11,27 +11,7 @@ namespace slg {
     : m_quad(),
       m_turbulence()
   {
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec2> coords;
-    std::vector<unsigned short> indicies;
-
-    vertices.push_back(glm::vec3(-1, 1, 0));
-    vertices.push_back(glm::vec3(-1, -1, 0));
-    vertices.push_back(glm::vec3(1, -1, 0));
-    vertices.push_back(glm::vec3(1, 1, 0));
-
-    coords.push_back(glm::vec2(0, 1));
-    coords.push_back(glm::vec2(0, 0));
-    coords.push_back(glm::vec2(1, 0));
-    coords.push_back(glm::vec2(1, 1));
-
-    pushTriangle(indicies, 0, 1, 2);
-    pushTriangle(indicies, 0, 2, 3);
-
-    m_quad.addBuffer(Mesh::VERTEX, vertices);
-    m_quad.addBuffer(Mesh::UV, coords);
-    m_quad.addBuffer(Mesh::INDICIES, indicies);
-    m_quad.setIndexCount(indicies.size());
+    createQuad(m_quad, true);
 
     m_turbulence.load("../../example/data/tool.vert", GL_VERTEX_SHADER);
     m_turbulence.load2("../../example/data/noise2D.glsl", "../../example/data/turbulence.frag", GL_FRAGMENT_SHADER);
