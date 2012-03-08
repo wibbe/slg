@@ -1,6 +1,8 @@
 
 attribute vec3 inVertex;
 
+varying vec2 texCoord;
+
 uniform mat4 modelViewProj;
 uniform mat4 model;
 uniform vec2 texOffset;
@@ -11,6 +13,7 @@ uniform sampler2D heightMap;
 void main()
 {
   vec2 uv = texOffset + inVertex.xz * texScale;
+  texCoord = uv;
 
   float height = texture2D(heightMap, uv).x;
 

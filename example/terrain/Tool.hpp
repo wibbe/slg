@@ -3,25 +3,30 @@
 #define SLG_TOOL_HPP
 
 #include "slg/FrameBuffer.hpp"
+#include "slg/Mesh.hpp"
+#include "slg/Shader.hpp"
 
 namespace slg {
 
   class Tool
   {
     public:
-      Tool() { }
-      virtual ~Tool() { }
+      enum Command
+      {
+        CLEAR,
+        TURBULENCE
+      };
 
-      virtual void apply(FrameBuffer & source, FrameBuffer & target, float dt) = 0;
-  };
-
-
-  class ClearTool : public Tool
-  {
     public:
-      ClearTool();
+      Tool();
+      ~Tool();
 
-      void apply(FrameBuffer & source, FrameBuffer & target, float dt);
+      void apply(Command command, FrameBuffer & source, FrameBuffer & target, float dt);
+
+    private:
+      Mesh m_quad;
+
+      Shader m_turbulence;
   };
 
 }

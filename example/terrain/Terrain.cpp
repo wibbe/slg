@@ -52,10 +52,6 @@ namespace slg {
     m_shader.load("../../example/data/Terrain.frag", GL_FRAGMENT_SHADER);
     m_shader.setupMeshAttributes();
     m_shader.link();
-
-    // Setup heightmap
-    ClearTool clear;
-    clear.apply(*m_heightMaps[1], *m_heightMaps[0], 0.0);
   }
 
   Terrain::~Terrain()
@@ -97,16 +93,17 @@ namespace slg {
         texOffset.x += texDelta.x;
       }
 
+      texOffset.x = 0.0;
       texOffset.y += texDelta.y;
     }
 
     m_shader.unbind();
   }
 
-  void Terrain::applyTool(Tool & tool, float dt)
+  void Terrain::applyTool(Tool & tool, Tool::Command command, float dt)
   {
     m_currentHeightMap = (m_currentHeightMap + 1) % 2;
-    tool.apply(*m_heightMaps[(m_currentHeightMap + 1) % 2], *m_heightMaps[m_currentHeightMap], dt);
+    tool.apply(command, *m_heightMaps[(m_currentHeightMap + 1) % 2], *m_heightMaps[m_currentHeightMap], dt);
   }
 
 }

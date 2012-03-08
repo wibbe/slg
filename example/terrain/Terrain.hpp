@@ -22,7 +22,7 @@ namespace slg {
 
       void draw(Camera const& camera);
 
-      void applyTool(Tool & tool, float dt);
+      void applyTool(Tool & tool, Tool::Command command, float dt);
 
     private:
       int m_width;

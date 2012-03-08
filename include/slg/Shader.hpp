@@ -46,6 +46,7 @@ namespace slg {
       /// * GL_VERTEX_SHADER
       /// * GL_FRAGMENT_SHADER
       bool load(const char * filename, unsigned int type);
+      bool load2(const char * filename1, const char * filename2, unsigned int type);
 
       void setupMeshAttributes();
       bool link();

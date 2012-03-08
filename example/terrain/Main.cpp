@@ -45,7 +45,9 @@ class GameWindow : public slg::Window
       flyController(m_camera, input(), dt);
 
       if (input().isKeyDown('C'))
-        m_terrain->applyTool(m_clearTool, 0.0);
+        m_terrain->applyTool(m_tool, slg::Tool::CLEAR, 0.0);
+      if (input().isKeyDown('T'))
+        m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, dt);
 
       return !input().isKeyDown(GLFW_KEY_ESC);
     }
@@ -53,7 +55,7 @@ class GameWindow : public slg::Window
     void resize(int width, int height)
     {
       glViewport(0, 0, width, height);
-      m_camera.perspective(60.0f, width / (float)height, 1.0, 500.0);
+      m_camera.perspective(60.0f, width / (float)height, 1.0, 500.0); 
     }
     
     void paint()
@@ -86,8 +88,7 @@ class GameWindow : public slg::Window
     slg::Shader m_shader;
     
     slg::Terrain * m_terrain;
-
-    slg::ClearTool m_clearTool;
+    slg::Tool m_tool;
 };
 
 

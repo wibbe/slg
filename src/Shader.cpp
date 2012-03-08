@@ -86,6 +86,44 @@ namespace slg {
     return true;
   }
 
+  bool Shader::load2(const char * filename1, const char * filename2, unsigned int type)
+  {
+    assert(m_shaderCount < MAX_SHADERS);
+    
+    int length[2];
+    char * data[2];
+    
+    if (!fileContent(filename1, &data[0], length[0]))
+      return false;
+
+    if (!fileContent(filename2, &data[1], length[1]))
+    {
+      delete[] data[0];
+      return false;
+    }
+
+    GLuint shader = glCreateShader(type);
+	  glShaderSource(shader, 2, (const GLchar **)data, length);
+	  glCompileShader(shader);
+
+	  delete[] data[0];
+	  delete[] data[1];
+	  
+	  int ok;
+	  glGetShaderiv(shader, GL_COMPILE_STATUS, &ok);
+	  if (!ok)
+	  {
+	  	fprintf(stderr, "Failed to compile shaders: %s, %s\n", filename1, filename2);
+	  	showLogInfo(shader, glGetShaderiv, glGetShaderInfoLog);
+	  	destroy();
+	  	return false;
+	  }
+
+	  m_shaders[m_shaderCount++] = shader;
+
+    return true;
+  }
+
   bool Shader::link()
   {
     for (int i = 0; i <m_shaderCount; ++i)
