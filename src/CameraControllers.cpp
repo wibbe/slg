@@ -17,8 +17,8 @@ namespace slg {
 
     if (input.mouseButton(1))
     {
-      camera.yaw(input.mouseRelX() * 0.3);
-      camera.pitch(input.mouseRelY() * 0.3);
+      camera.yaw(input.mouseRelX() * 0.2);
+      camera.pitch(input.mouseRelY() * 0.2);
     }
   }
 

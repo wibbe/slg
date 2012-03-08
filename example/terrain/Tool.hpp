@@ -14,7 +14,8 @@ namespace slg {
       enum Command
       {
         CLEAR,
-        TURBULENCE
+        TURBULENCE,
+        RIDGED
       };
 
     public:
@@ -27,6 +28,7 @@ namespace slg {
       Mesh m_quad;
 
       Shader m_turbulence;
+      Shader m_ridged;
   };
 
 }

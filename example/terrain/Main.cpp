@@ -48,6 +48,8 @@ class GameWindow : public slg::Window
         m_terrain->applyTool(m_tool, slg::Tool::CLEAR, 0.0);
       if (input().isKeyDown('T'))
         m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, dt);
+      if (input().isKeyDown('R'))
+        m_terrain->applyTool(m_tool, slg::Tool::RIDGED, dt);
 
       return !input().isKeyDown(GLFW_KEY_ESC);
     }
@@ -55,7 +57,7 @@ class GameWindow : public slg::Window
     void resize(int width, int height)
     {
       glViewport(0, 0, width, height);
-      m_camera.perspective(60.0f, width / (float)height, 1.0, 500.0); 
+      m_camera.perspective(60.0f, width / (float)height, 0.1, 500.0); 
     }
     
     void paint()

@@ -68,3 +68,35 @@ float snoise(vec2 v) {
   return 130.0 * dot(m, g);
 }
 
+float ridgedNoise(vec2 p)
+{
+  return 1.0 - abs(snoise(p));
+}
+
+float turbulence(vec2 p, float octaves, float lacunarity, float gain)
+{
+    float sum = 0.0;
+    float freq = 1.0, amp = 1.0;
+    for (float i = 0.0; i < octaves; i++)
+    {
+        float n = snoise(p * freq);
+        sum += n * amp;
+        freq *= lacunarity;
+        amp *= gain;
+    }
+    return sum;
+}
+
+float ridgedTurbulence(vec2 p, float octaves, float lacunarity, float gain)
+{
+    float sum = 0.0;
+    float freq = 1.0, amp = 1.0;
+    for (float i = 0.0; i < octaves; i++)
+    {
+        float n = ridgedNoise(p * freq);
+        sum += n * amp;
+        freq *= lacunarity;
+        amp *= gain;
+    }
+    return sum;
+}
