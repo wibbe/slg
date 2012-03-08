@@ -22,7 +22,9 @@ class GameWindow : public slg::Window
   public:
     GameWindow()
       : Window(800, 500),
-        m_terrain(0)
+        m_terrain(0),
+        m_toolPos(0.0, 0.0),
+        m_toolOnTerrain(false)
     {
       setTitle("Terrain Edit");
 
@@ -44,25 +46,19 @@ class GameWindow : public slg::Window
     {
       flyController(m_camera, input(), dt);
 
-      glm::vec2 pos;
+      m_toolOnTerrain = m_terrain->worldToLocal(m_worldPos, m_toolPos);
 
-      const bool ridged = input().isKeyDown('R');
-      const bool turbulence = input().isKeyDown('T');
-
-      if (ridged || turbulence)
+      if (m_toolOnTerrain)
       {
-        if (m_terrain->worldToLocal(m_worldPos, pos))
-        {
-          if (turbulence)
-            m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, pos, dt);
+        if (input().isKeyDown('T'))
+          m_terrain->applyTool(m_tool, slg::Tool::TURBULENCE, m_toolPos, dt);
 
-          if (ridged)
-            m_terrain->applyTool(m_tool, slg::Tool::RIDGED, pos, dt);
-        }
+        if (input().isKeyDown('R'))
+          m_terrain->applyTool(m_tool, slg::Tool::RIDGED, m_toolPos, dt);
       }
 
       if (input().isKeyDown('C'))
-        m_terrain->applyTool(m_tool, slg::Tool::CLEAR, pos, 0.0);
+        m_terrain->applyTool(m_tool, slg::Tool::CLEAR, m_toolPos, 0.0);
 
       return !input().isKeyDown(GLFW_KEY_ESC);
     }
@@ -79,7 +75,7 @@ class GameWindow : public slg::Window
 		  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       m_camera.update();
 
-      m_terrain->draw(m_camera);
+      m_terrain->draw(m_camera, m_toolPos, m_toolOnTerrain);
 
       m_worldPos = m_camera.pick(input().mousePosition());
     }
@@ -94,6 +90,8 @@ class GameWindow : public slg::Window
     slg::Tool m_tool;
 
     glm::vec3 m_worldPos;
+    glm::vec2 m_toolPos;
+    bool m_toolOnTerrain;
 };
 
 

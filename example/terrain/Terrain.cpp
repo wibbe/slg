@@ -60,7 +60,7 @@ namespace slg {
     delete m_heightMaps[1];
   }
 
-  void Terrain::draw(Camera const& camera)
+  void Terrain::draw(Camera const& camera, glm::vec2 const& toolPos, bool showTool)
   {
     m_shader.bind();
     m_heightMaps[m_currentHeightMap]->bindTexture(0, 0);
@@ -71,6 +71,10 @@ namespace slg {
     float offsetZ = m_patchCount.y * -0.5;
 
     m_shader.uniform("heightMap", 0);
+    m_shader.uniform("texelSize", 1.0f / m_width, 1.0f / m_height);
+
+    m_shader.uniform("toolPos", toolPos);
+    m_shader.uniform("showTool", showTool ? 1.0f : 0.0f);
 
     glm::vec2 texOffset(0.0);
     const glm::vec2 texDelta(1.0 / m_patchCount.x, 1.0 / m_patchCount.y);

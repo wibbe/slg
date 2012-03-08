@@ -20,7 +20,7 @@ namespace slg {
       Terrain(int width, int height, int patchSize);
       ~Terrain();
 
-      void draw(Camera const& camera);
+      void draw(Camera const& camera, glm::vec2 const& toolPos, bool showTool);
 
       bool worldToLocal(glm::vec3 const& world, glm::vec2 & local);
 

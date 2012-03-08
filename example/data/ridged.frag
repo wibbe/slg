@@ -8,11 +8,13 @@ varying vec2 texCoord;
 void main()
 {
   float current = texture2D(previous, texCoord).r;
-  float h = ridgedTurbulence(texCoord * 5.0, 4.0, 2.0, 0.5);
+  float h = ridgedTurbulence(texCoord * 3.0, 4.0, 2.0, 0.5);
 
   float dist = distance(pos, texCoord);
 
-  float finalHeight = current + (dist < 0.1 ? (h * dt) : 0.0);
+  float amount = dist < 0.03 ? 1.0 : (dist > 0.15 ? 0.0 : (1.0 - ((dist - 0.03) / 0.13)));
+
+  float finalHeight = current + h * dt * amount;
   gl_FragColor = vec4(vec3(finalHeight), 1);
 }
 
