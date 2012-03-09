@@ -79,7 +79,7 @@ float turbulence(vec2 p, float octaves, float lacunarity, float gain)
     float freq = 1.0, amp = 1.0;
     for (float i = 0.0; i < octaves; i++)
     {
-        float n = snoise(p * freq);
+        float n = (snoise(p * freq) + 1.0) * 0.5;
         sum += n * amp;
         freq *= lacunarity;
         amp *= gain;
