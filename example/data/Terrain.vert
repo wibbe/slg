@@ -22,8 +22,8 @@ void main()
   float heightU = texture2D(heightMap, uv + vec2(texelSize.x, 0.0)).x;
   float heightV = texture2D(heightMap, uv + vec2(0.0, texelSize.y)).x;
 
-  vec3 u = normalize(vec3(0.5, heightU - height, 0.0));
-  vec3 v = normalize(vec3(0, heightU - height, 0.5));
+  vec3 u = normalize(vec3(0.3, heightU - height, 0.0));
+  vec3 v = normalize(vec3(0, heightU - height, 0.3));
   normal = cross(v, u);
 
   gl_Position = modelViewProj * vec4(inVertex + vec3(0, height, 0), 1.0);
