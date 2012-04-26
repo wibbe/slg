@@ -12,6 +12,7 @@ SET(SOURCE
   MeshHelpers.cpp
   CameraControllers.cpp
   Tile.cpp
+  Font.cpp
   
   glew.c
   soil/SOIL.c
